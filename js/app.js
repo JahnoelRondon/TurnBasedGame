@@ -17,17 +17,27 @@ class spell {
     }
 }
 
-let fireCat = new spell("FireCat", "FireCat", 1, 80, "Fire")
+let fireCat = new spell("FireCat", "FireCatBG", 1, 80, "Fire")
 
 console.log(fireCat);
 
-function generateCard(){
+function renderCards(){
     // create a div container for the card
-    cardHeaderEl.textContent = fireCat.name;
-    // img
-    cardDescription.textContent = fireCat.dmg;
+    // cardHeaderEl.textContent = fireCat.name;
+    // // img
+    // cardDescription.textContent = fireCat.dmg;
 
 }
 
-generateCard();
+renderCards();
+
+
+
+
+// Psuedo
+
+// 0 cache all of the card elements to be rendered
+
+// 1. Create a class object to be used for every spell card i decide to make
+    // 1.1 after creating a spell card 
 
