@@ -1,31 +1,89 @@
-// FOR IMAGE
-// https://www.geeksforgeeks.org/how-to-pass-image-as-a-parameter-in-javascript-function/
+//------------------------------CACHED Elements
 
-// CACHED 
-const cardHeaderEl = document.getElementById("h0");
-const cardImgEl = document.getElementById("img0");
-const cardDescription = document.getElementById("desc0");
-console.log(cardHeaderEl);
+// bow elements
+const bowHeaderEl = document.querySelector("#bow > h2");
+const bowImgEl = document.querySelector("#bow > img");
+const bowDescription = document.querySelector("#bow > p");
 
+// Club elements
+const clubHeaderEl = document.querySelector("#club > h2");
+const clubImgEl = document.querySelector("#club > img");
+const clubDescription = document.querySelector("#club > p");
+
+// Axe elements
+const axeHeaderEl = document.querySelector("#axe > h2");
+const axeImgEl = document.querySelector("#axe > img");
+const axeDescription = document.querySelector("#axe > p");
+
+// Heal elements
+const healHeaderEl = document.querySelector("#heal > h2");
+const healImgEl = document.querySelector("#heal > img");
+const healDescription = document.querySelector("#heal > p");
+
+
+//--------------------------------CLASSES
 class spell {
-    constructor(name, img, pipCost, dmg, type){
+    constructor(name, img, cost, dmg, healing){
         this.name = name;
         this.img = img;
-        this.pipCost = pipCost;
+        this.cost = cost;
         this.dmg = dmg;
-        this.type = type;
+        this.healing = healing;
     }
 }
 
-let fireCat = new spell("FireCat", "FireCatBG", 1, 80, "Fire")
+class player {
+    constructor(name,health,coins,spell1,spell2,spell3,spell4){
+        this.name = name;
+        this.health = health;
+        this.coins = coins;
 
-console.log(fireCat);
+        // unnique spells
+        this.spell1 = spell1;
+    }
+}
+
+class monster {
+    constructor(name,health){
+        this.name = name;
+        this.health = health;
+    }
+}
+
+//----------------OBJECTS 
+
+//-----------Player spells - VIKING
+let bowSpell = new spell("Long Shot", "/imgs/bow.svg", 1, 80)
+let clubSpell = new spell("Skull Cracker", "/imgs/club.svg", 2, 130)
+let axeSpell = new spell("War Axe", "/imgs/axe.svg", 3, 200)
+let healSpell = new spell("Potion", "/imgs/heal.svg", 4, null, 250)
+
+// Players
+let viking = new player("Viking", 500, 1, bowSpell);
+console.log(viking);
+
 
 function renderCards(){
-    // create a div container for the card
-    // cardHeaderEl.textContent = fireCat.name;
-    // // img
-    // cardDescription.textContent = fireCat.dmg;
+    
+    // Bow rendered
+    bowHeaderEl.textContent = bowSpell.name;
+    bowImgEl.src = bowSpell.img;
+    bowDescription.textContent = `Damage: ${bowSpell.dmg}`;
+
+    // Club rendered
+    clubHeaderEl.textContent = clubSpell.name;
+    clubImgEl.src = clubSpell.img;
+    clubDescription.textContent = `Damage: ${clubSpell.dmg}`;
+
+    // Axe rendered
+    axeHeaderEl.textContent = axeSpell.name;
+    axeImgEl.src = axeSpell.img;
+    axeDescription.textContent = `Damage: ${axeSpell.dmg}`;
+
+    // Heal rendered
+    healHeaderEl.textContent = healSpell.name;
+    healImgEl.src = healSpell.img;
+    healDescription.textContent = `Heal: ${healSpell.healing}`;
 
 }
 
@@ -41,3 +99,12 @@ renderCards();
 // 1. Create a class object to be used for every spell card i decide to make
     // 1.1 after creating a spell card 
 
+// 2) CARDS functions
+    // Do not allow the player to click on cards they cannot afford,
+    // if the player does not have enough coins for the card disable
+    // 
+
+
+// 3. Create a class for different kind of players and enemies
+    // make the enemy render the card it chooses randomly
+    // 3.1 enemies are special and dont use coins just attacks
