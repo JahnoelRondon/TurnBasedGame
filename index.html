@@ -10,35 +10,69 @@
 <body>
     <div id="gameBoard">
 
-        <section id="displayArea">
-            <div></div>
-            <div></div>
-        </section>
+        <section class="playerSpace">
 
-
-        <section id="playerSpace">
-
-            <div class="card">
+            <!-- will need to make enemy cards with specific id's -->
+            <div class="card" id="">
                 <header id="h0">thing</header>
                 <img id="img0">
                 <div id="desc0"></div>
             </div>
 
-            <div class="card">
+        </section>
+
+        <!-- Board -->
+        <section id="displayArea">
+            <div class="playerSides">
+
+                <img src="/imgs/fireCat.svg">
+                <div class="displayCard" id="enemyDisplay"></div>
+                <div class="battleinfoContainer">
+                    <p id="enemyHealthEl">Health: 500/100</p>
+                    <p id="enemyCoinEl">Coins: 0</p>
+                </div>
+                
+
+            </div>
+            <div class="playerSides">
+
+                <img src="/imgs/dwarf-face.svg">
+                <div class="displayCard" id="playerDisplay"></div>
+                <div class="battleinfoContainer">
+                    <p id="playerHealthEl">Health: 100/100</p>
+                    <p id="playerCoinEl">Coins: 0</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Player Side -->
+        <section class="playerSpace">
+
+            <!-- figure out what spell cards ill make to change id description to be more clear and specific -->
+            <div class="card" id="">
+                <header id="h0">thing</header>
+                <img id="img0">
+                <div id="desc0"></div>
+            </div>
+
+            <div class="card" id="">
                 <header id="h1">stuff</header>
                 <img id="img1">
                 <div id="desc1"></div>
             </div>
 
-            <div class="card">
+            <div class="card" id="">
                 <header id="h2">meh</header>
                 <img id="img2">
                 <div id="desc2"></div>
             </div>
 
+            <button>Pass</button>
+
         </section>
+
     </div>
-    
     
 
 

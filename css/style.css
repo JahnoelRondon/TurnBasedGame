@@ -1,9 +1,31 @@
 body{
     background-color: black;
+    margin: 0;
 }
 
-/*          Player Side                 */
-#playerSpace {
+#displayArea{
+    width: 100%;
+    height: 460px;
+    background-color: blanchedalmond;
+}
+
+#displayArea .playerSides{
+    height: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+#displayArea .displayCard, #displayArea img, .battleinfoContainer{
+    padding: 10px;
+}
+
+.displayCard{
+    width: 200px;
+}
+
+
+/*          Player Cards Side                 */
+.playerSpace {
     width: 100%;
     height: 250px;
     background-color: rgb(109, 108, 109);
@@ -18,6 +40,10 @@ body{
     width: 150px;
     height: 200px;
     background-color: wheat;
+}
+
+.card:hover {
+    border: solid crimson 2px;
 }
 
 .card header {
