@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wizard101</title>
+    <title>Beast Slayers</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+
+    <!-- unhide this when the game starts -->
     <div id="gameBoard">
 
         <section class="playerSpace">
 
             <!-- will need to make enemy cards with specific id's -->
-            <div class="card" id="Fang">
+            <div class="card" id="enemyCard">
                 <h2></h2>
                 <img>
                 <p></p>
@@ -25,18 +27,16 @@
         <section id="displayArea">
             <div class="playerSides">
 
-                <img src="/imgs/beast1.svg">
-                <div class="displayCard" id="enemyDisplay"></div>
+                <img id="enemyAvatar">
                 <div class="battleinfoContainer">
                     <p id="enemyHealthEl">Health: 500/100</p>
-                    <p id="enemyCoinEl">Coins: 0</p>
+                    <!-- make possible text here -->
                 </div>
 
             </div>
             <div class="playerSides">
 
-                <img src="/imgs/dwarf-face.svg">
-                <div class="displayCard" id="playerDisplay"></div>
+                <img id="playerAvatar">
                 <div class="battleinfoContainer">
                     <p id="playerHealthEl">Health: 100/100</p>
                     <p id="playerCoinEl">Coins: 0</p>
@@ -49,25 +49,25 @@
         <section class="playerSpace">
 
             <!-- figure out what spell cards ill make to change id description to be more clear and specific -->
-            <div class="card" id="bow">
+            <div class="card" id="card1">
                 <h2></h2>
                 <img>
                 <p></p>
             </div>
 
-            <div class="card" id="club">
+            <div class="card" id="card2">
                 <h2></h2>
                 <img>
                 <p></p>
             </div>
 
-            <div class="card" id="axe">
+            <div class="card" id="card3">
                 <h2></h2>
                 <img>
                 <p></p>
             </div>
 
-            <div class="card" id="heal">
+            <div class="card" id="card4">
                 <h2></h2>
                 <img>
                 <p></p>

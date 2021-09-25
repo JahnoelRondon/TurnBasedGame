@@ -5,11 +5,15 @@ p,h2 {
 }
 
 body{
-    background-color: black;
+    background-color: rgb(61, 61, 61);
     margin: 0;
 }
 
 
+#gameBoard {
+    max-width: 1000px;
+    margin: 0 auto;
+}
 
 #displayArea{
     width: 100%;
@@ -23,12 +27,8 @@ body{
     justify-content: center;
 }
 
-#displayArea .displayCard, #displayArea img, .battleinfoContainer{
+#displayArea img, .battleinfoContainer{
     padding: 10px;
-}
-
-.displayCard{
-    width: 200px;
 }
 
 
