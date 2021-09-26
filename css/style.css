@@ -1,6 +1,6 @@
 /* My Resets */
 
-p,h2 {
+p,h1,h2,h3 {
     margin: 0;
 }
 
@@ -9,6 +9,50 @@ body{
     margin: 0;
 }
 
+/*    Intro Render    */
+
+#gameIntro {
+    background-color: #6d6c6d;
+    color: whitesmoke;
+    max-width: 1000px;
+    height: 100vh;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#gameIntro h2, h3{
+    padding-top: 10px;
+}
+
+#gameIntro h2{
+    font-size: 34px;
+}
+
+.characterSelection {
+    max-width: 800px;
+    height: 400px;
+    background-color: #836f49;
+    margin: 20px auto;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+
+.characterSelection img {
+    width: 200px;
+    height: 200px;
+    transition: all 0.2s;
+}
+
+.characterSelection img:hover {
+    width: 206px;
+    height: 206px;
+    box-shadow: 3px 3px 8px black;
+}
+
+/* Main Render */
 
 #gameBoard {
     max-width: 1000px;

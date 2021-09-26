@@ -1,5 +1,15 @@
 //------------------------------CACHED Elements
 
+// --------- Game INITIAL RENDER
+const introRenderEl = document.querySelector("#gameIntro");
+
+// Character selections
+const characterSelectionBoard = document.querySelector(".characterSelection")
+
+
+// -----MAIN GAME IN PROGRESS RENDER
+const gameBoardEl = document.querySelector("#gameBoard");
+
 // CARD SLOT 1
 const card1HeaderEl = document.querySelector("#card1 > h2");
 const card1ImgEl = document.querySelector("#card1 > img");
@@ -23,6 +33,10 @@ const card4Description = document.querySelector("#card4 > p");
 // Avatar IMGS
 const enemyEl = document.querySelector("#enemyAvatar");
 const playerEl = document.querySelector("#playerAvatar");
+
+// Text Elements / health and coins
+const playerHealthElement = document.querySelector("#playerHealthEl");
+const playerCoinsElement = document.querySelector("#playerCoinEl");
 
 
 //--------------------------------CLASSES
@@ -70,7 +84,6 @@ let healPotion = new Card("Potion", "/imgs/heal.svg", 4, null, 250)
 
 // Players
 let viking = new Player("Viking", 500, 1, bowWeapon,clubWeapon,axeWeapon,healPotion, "/imgs/viking.svg");
-console.log(viking);
 
 // Monsters 
 let saberTooth = new Monster("SaberTooth", 800, "/imgs/saberTooth.svg")
@@ -94,19 +107,31 @@ function renderViking(){
     card3Description.textContent = `Damage: ${viking.card3.dmg}`;
 
     // Heal card rendered
-    card4HeaderEl.textContent = viking.card4name;
+    card4HeaderEl.textContent = viking.card4.name;
     card4ImgEl.src = viking.card4.img;
     card4Description.textContent = `Heal: ${viking.card4.healing}`;
 
     // player avatars rendered 
     playerEl.src = viking.img;
+    playerHealthElement.textContent = `HEALTH: ${viking.health}`;
+    playerCoinsElement.textContent = `COINS: ${viking.coins}`;
 
     enemyEl.src = saberTooth.img
 
 }
 
-renderViking();
 
+characterSelectionBoard.addEventListener("click", handleSelection);
+
+function handleSelection(event){
+    if(event.target.id === "vikingSelect"){
+        console.log("render viking game");
+        introRenderEl.hidden = true;
+        gameBoardEl.hidden = false;
+        renderViking();
+        // another function that gets the game state, stats of the viking and monster to put into play
+    }
+}
 
 
 
@@ -127,4 +152,11 @@ renderViking();
     // make the enemy render the card it chooses randomly
     // 3.1 enemies are special and dont use coins just attacks
 
-    
+    // 4 Game state
+// When after selecting a character render the character that was clicked and render an enemy
+
+// as well as rendering them, set a battle stage for the respective player and beast. (find out how to get the current player and current enemy??)
+
+// Create a game state object that takes in the player and enemys health, spells, and players coins,?
+
+// When the person selects a character initialization based on the one they selected should render the board and game state with player stats and monster stats

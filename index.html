@@ -9,8 +9,21 @@
 </head>
 <body>
 
+    <!-- Game intro screen -->
+    <div id="gameIntro" >
+        <h2>Beast Slayers</h2>
+        <h3>Select your character</h3>
+        <div class="characterSelection">
+            <!-- viking select -->
+            <img src="/imgs/viking.svg" id="vikingSelect"> 
+            <img src="/imgs/viking.svg" id="knightSelect"> 
+            <img src="/imgs/viking.svg" id="otherSelect"> 
+        </div>
+    </div>
+
+
     <!-- unhide this when the game starts -->
-    <div id="gameBoard">
+    <div id="gameBoard" hidden>
 
         <section class="playerSpace">
 
@@ -27,7 +40,7 @@
         <section id="displayArea">
             <div class="playerSides">
 
-                <img id="enemyAvatar">
+                <img id="enemyAvatar" src="/imgs/expander.svg">
                 <div class="battleinfoContainer">
                     <p id="enemyHealthEl">Health: 500/100</p>
                     <!-- make possible text here -->
@@ -36,7 +49,7 @@
             </div>
             <div class="playerSides">
 
-                <img id="playerAvatar">
+                <img id="playerAvatar" src="/imgs/expander.svg">
                 <div class="battleinfoContainer">
                     <p id="playerHealthEl">Health: 100/100</p>
                     <p id="playerCoinEl">Coins: 0</p>
@@ -78,7 +91,6 @@
         </section>
 
     </div>
-    
 
 
     <script src="/js/app.js"></script>
