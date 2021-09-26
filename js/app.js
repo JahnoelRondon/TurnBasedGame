@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------------CACHED Elements
+//-------------------------------------------------------CACHED Elements
 
 // --------- Game INITIAL RENDER
 const introRenderEl = document.querySelector("#gameIntro");
@@ -6,6 +6,7 @@ const introRenderEl = document.querySelector("#gameIntro");
 // Character selections
 const characterSelectionBoard = document.querySelector(".characterSelection")
 
+characterSelectionBoard.addEventListener("click", handleSelection);
 
 // -----MAIN GAME IN PROGRESS RENDER
 const gameBoardEl = document.querySelector("#gameBoard");
@@ -30,6 +31,13 @@ const card4HeaderEl = document.querySelector("#card4 > h2");
 const card4ImgEl = document.querySelector("#card4 > img");
 const card4Description = document.querySelector("#card4 > p");
 
+// Card deck
+const cards = document.querySelectorAll(".card");
+
+cards.forEach(function(card){
+    card.addEventListener("click", useCard)
+})
+
 // Avatar IMGS
 const enemyEl = document.querySelector("#enemyAvatar");
 const playerEl = document.querySelector("#playerAvatar");
@@ -38,8 +46,10 @@ const playerEl = document.querySelector("#playerAvatar");
 const playerHealthElement = document.querySelector("#playerHealthEl");
 const playerCoinsElement = document.querySelector("#playerCoinEl");
 
+const enemyHealthelement = document.querySelector("#enemyHealthEl");
 
-//---------------------------------------------------------------------------CLASSES
+
+//----------------------------------------------------------------CLASSES
 class Card {
     constructor(name, img, cost, dmg, healing){
         this.name = name;
@@ -74,7 +84,7 @@ class Monster {
     }
 }
 
-//--------------------------------------------------------------------------------OBJECTS 
+//-----------------------------------------------------------------OBJECTS 
 
 //-----------Player spells objects
 // ---VIKING 
@@ -89,7 +99,7 @@ let viking = new Player("Viking", 500, 1, bowWeapon,clubWeapon,axeWeapon,healPot
 // Monsters 
 let saberTooth = new Monster("SaberTooth", 800, "/imgs/saberTooth.svg")
 
-// ------------------------------------------------------------------- Player State and RENDERS
+// --------------------------------------------- Player State and RENDERS
 // --------GAME STATE
 
 const gameState = {
@@ -114,6 +124,12 @@ const gameState = {
     enemyImage: null,
 }
 
+// --------------------- FUNCTIONS
+// Event for game state on character Selection
+
+function useCard(event){
+    console.log(this.id);
+}
 
 function gameStateViking(){
 
@@ -125,6 +141,7 @@ function gameStateViking(){
 
     gameState.playerName = viking.name;
     gameState.playerImage = viking.img;
+
     gameState.playerCard1 = viking.card1;
     gameState.playerCard2 = viking.card2;
     gameState.playerCard3 = viking.card3;
@@ -134,6 +151,7 @@ function gameStateViking(){
     gameState.enemyHealth = saberTooth.health;
     gameState.enemyImage = saberTooth.img;
 
+    // change the name to render game since it can be used for all characters????
     renderViking();
 
 }
@@ -141,42 +159,40 @@ function gameStateViking(){
 function renderViking(){
     
     // Bow rendered
-    card1HeaderEl.textContent = viking.card1.name;
-    card1ImgEl.src = viking.card1.img;
-    card1Description.textContent = `Damage: ${viking.card1.dmg}`;
+    card1HeaderEl.textContent = gameState.playerCard1.name;
+    card1ImgEl.src = gameState.playerCard1.img;
+    card1Description.textContent = `Damage: ${gameState.playerCard1.dmg}`;
 
     // Club card rendered
-    card2HeaderEl.textContent = viking.card2.name;
-    card2ImgEl.src = viking.card2.img;
-    card2Description.textContent = `Damage: ${viking.card2.dmg}`;
+    card2HeaderEl.textContent = gameState.playerCard2.name;
+    card2ImgEl.src = gameState.playerCard2.img;
+    card2Description.textContent = `Damage: ${gameState.playerCard2.dmg}`;
 
     // Axe card rendered
-    card3HeaderEl.textContent = viking.card3.name;
-    card3ImgEl.src = viking.card3.img;
-    card3Description.textContent = `Damage: ${viking.card3.dmg}`;
+    card3HeaderEl.textContent = gameState.playerCard3.name;
+    card3ImgEl.src = gameState.playerCard3.img;
+    card3Description.textContent = `Damage: ${gameState.playerCard3.dmg}`;
 
     // Heal card rendered
-    card4HeaderEl.textContent = viking.card4.name;
-    card4ImgEl.src = viking.card4.img;
-    card4Description.textContent = `Heal: ${viking.card4.healing}`;
+    card4HeaderEl.textContent = gameState.playerCard4.name;
+    card4ImgEl.src = gameState.playerCard4.img;
+    card4Description.textContent = `Heal: ${gameState.playerCard4.healing}`;
 
     // player avatars rendered 
     playerEl.src = viking.img;
 
-    // using dynamic Game state 
-    playerHealthElement.textContent = `HEALTH: ${viking.health}`;
-    playerCoinsElement.textContent = `COINS: ${viking.coins}`;
+    playerHealthElement.textContent = `HEALTH: ${gameState.playerHealth}`;
+    playerCoinsElement.textContent = `COINS: ${gameState.playerCoins}`;
 
-    enemyEl.src = saberTooth.img
+
+    enemyEl.src = gameState.enemyImage;
+    enemyHealthelement.textContent = `HEALTH: ${gameState.enemyHealth}`;
 
 }
 
 
 
 
-
-// Event for game state on character Selection
-characterSelectionBoard.addEventListener("click", handleSelection);
 
 function handleSelection(event){
     // ------------------------------------- VIKING GAMEPLAY
@@ -218,3 +234,5 @@ function handleSelection(event){
 // Create a game state object that takes in the player and enemys health, spells, and players coins,?
 
 // When the person selects a character initialization based on the one they selected should render the board and game state with player stats and monster stats
+
+// Add an event listener to each of the cards that checks the players coins and its cost, if the player has enough coins then use the spell by deducting the cost of the spell to player coins and use the damage of that card to subtract from the enemies health. 
