@@ -50,6 +50,7 @@ body{
     width: 206px;
     height: 206px;
     box-shadow: 3px 3px 8px black;
+    cursor: pointer;
 }
 
 /* Main Render */

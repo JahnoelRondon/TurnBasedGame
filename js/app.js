@@ -1,4 +1,4 @@
-//------------------------------CACHED Elements
+//-----------------------------------------------------------------------------CACHED Elements
 
 // --------- Game INITIAL RENDER
 const introRenderEl = document.querySelector("#gameIntro");
@@ -39,7 +39,7 @@ const playerHealthElement = document.querySelector("#playerHealthEl");
 const playerCoinsElement = document.querySelector("#playerCoinEl");
 
 
-//--------------------------------CLASSES
+//---------------------------------------------------------------------------CLASSES
 class Card {
     constructor(name, img, cost, dmg, healing){
         this.name = name;
@@ -74,9 +74,10 @@ class Monster {
     }
 }
 
-//----------------OBJECTS 
+//--------------------------------------------------------------------------------OBJECTS 
 
-//-----------Player spells - VIKING
+//-----------Player spells objects
+// ---VIKING 
 let bowWeapon = new Card("Long Shot", "/imgs/bow.svg", 1, 80)
 let clubWeapon = new Card("Skull Cracker", "/imgs/club.svg", 2, 130)
 let axeWeapon = new Card("War Axe", "/imgs/axe.svg", 3, 200)
@@ -88,6 +89,54 @@ let viking = new Player("Viking", 500, 1, bowWeapon,clubWeapon,axeWeapon,healPot
 // Monsters 
 let saberTooth = new Monster("SaberTooth", 800, "/imgs/saberTooth.svg")
 
+// ------------------------------------------------------------------- Player State and RENDERS
+// --------GAME STATE
+
+const gameState = {
+    // dynamic player state
+    playerHealth: null,
+    playerCoins: null,
+    // game state player damage will be determined by card selected?
+    playerDamage: null,
+
+    playerName: null,
+    playerImage: null,
+    playerCard1: null,
+    playerCard2: null,
+    playerCard3: null,
+    playerCard4: null,
+
+    // dynamic enemy state
+    enemyHealth: null,
+    enemyDamage: null,
+
+    enemyName: null,
+    enemyImage: null,
+}
+
+
+function gameStateViking(){
+
+    // player 
+    gameState.playerHealth = viking.health;
+    gameState.playerCoins = viking.coins;
+    // game state player damage will be determined by card selected?
+    // gameState.playerDamage =
+
+    gameState.playerName = viking.name;
+    gameState.playerImage = viking.img;
+    gameState.playerCard1 = viking.card1;
+    gameState.playerCard2 = viking.card2;
+    gameState.playerCard3 = viking.card3;
+    gameState.playerCard4 = viking.card4;
+
+    // enemy
+    gameState.enemyHealth = saberTooth.health;
+    gameState.enemyImage = saberTooth.img;
+
+    renderViking();
+
+}
 
 function renderViking(){
     
@@ -113,6 +162,8 @@ function renderViking(){
 
     // player avatars rendered 
     playerEl.src = viking.img;
+
+    // using dynamic Game state 
     playerHealthElement.textContent = `HEALTH: ${viking.health}`;
     playerCoinsElement.textContent = `COINS: ${viking.coins}`;
 
@@ -121,16 +172,23 @@ function renderViking(){
 }
 
 
+
+
+
+// Event for game state on character Selection
 characterSelectionBoard.addEventListener("click", handleSelection);
 
 function handleSelection(event){
+    // ------------------------------------- VIKING GAMEPLAY
     if(event.target.id === "vikingSelect"){
-        console.log("render viking game");
+        console.log("change game state to viking");
         introRenderEl.hidden = true;
         gameBoardEl.hidden = false;
-        renderViking();
+
+        gameStateViking();
         // another function that gets the game state, stats of the viking and monster to put into play
     }
+
 }
 
 
