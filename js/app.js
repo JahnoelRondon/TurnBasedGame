@@ -38,6 +38,10 @@ cards.forEach(function(card){
     card.addEventListener("click", useCard)
 })
 
+// PASS BTN
+const passEl = document.querySelector("#pass");
+passEl.addEventListener("click", useCard);
+
 // Avatar IMGS
 const enemyEl = document.querySelector("#enemyAvatar");
 const playerEl = document.querySelector("#playerAvatar");
@@ -127,8 +131,78 @@ const gameState = {
 // --------------------- FUNCTIONS
 // Event for game state on character Selection
 
+function battleStage(){
+    console.log(gameState.playerDamage);
+    
+}
+
 function useCard(event){
-    console.log(this.id);
+    // make pass count as useCard as well and iterate and complete the turn
+    
+    // if id = card1 
+        // check card1 cost and compare to player coins, if they have enough coins then use the dmg from card 1 and reduce it to the enemies health as well as reduce the players coins (and add 1 coin), else alert that they do not have enough coins.
+
+    if(this.id === "card1"){
+        if(gameState.playerCoins >= gameState.playerCard1.cost) {
+            // create a function that takes in the parameter of dmg of the card, 
+            gameState.playerDamage = gameState.playerCard1.dmg;
+            battleStage();
+
+        } else{
+            alert(`You only have (${gameState.playerCoins}) coins, the card costs ${gameState.playerCard1.cost}`)
+        }        
+    }
+
+    if(this.id === "card2"){
+        if(gameState.playerCoins >= gameState.playerCard2.cost) {
+
+            gameState.playerDamage = gameState.playerCard2.dmg;
+            battleStage();
+        } else{
+            alert(`You only have (${gameState.playerCoins}) coins, the card costs ${gameState.playerCard2.cost}`)
+        }        
+    }
+    
+    if(this.id === "card3"){
+        if(gameState.playerCoins >= gameState.playerCard3.cost) {
+
+            gameState.playerDamage = gameState.playerCard3.dmg;
+            battleStage();
+        } else{
+            alert(`You only have (${gameState.playerCoins}) coins, the card costs ${gameState.playerCard3.cost}`)
+        }        
+    }
+    
+    if(this.id === "card4"){
+        if(gameState.playerCoins >= gameState.playerCard4.cost) {
+
+            gameState.playerDamage = gameState.playerCard4.dmg;
+            battleStage();
+        } else{
+            alert(`You only have (${gameState.playerCoins}) coins, the card costs ${gameState.playerCard4.cost}`)
+        }        
+    } 
+
+    if(this.id === "pass"){
+
+        gameState.playerDamage = 0;
+        battleStage();
+
+    }
+
+
+}
+
+function handleSelection(event){
+    // ------------------------------------- VIKING GAMEPLAY
+    if(event.target.id === "vikingSelect"){
+        console.log("change game state to viking");
+        introRenderEl.hidden = true;
+        gameBoardEl.hidden = false;
+
+        gameStateViking();
+    }
+
 }
 
 function gameStateViking(){
@@ -189,25 +263,6 @@ function renderViking(){
     enemyHealthelement.textContent = `HEALTH: ${gameState.enemyHealth}`;
 
 }
-
-
-
-
-
-function handleSelection(event){
-    // ------------------------------------- VIKING GAMEPLAY
-    if(event.target.id === "vikingSelect"){
-        console.log("change game state to viking");
-        introRenderEl.hidden = true;
-        gameBoardEl.hidden = false;
-
-        gameStateViking();
-        // another function that gets the game state, stats of the viking and monster to put into play
-    }
-
-}
-
-
 
 // Psuedo
 

@@ -127,3 +127,13 @@ body{
     height: 50px;
     background-color: #bca984;
 }
+
+/* PASS */
+#pass {
+    padding: 10px;
+    font-size: 16px;
+}
+
+#pass:hover {
+    cursor: pointer;
+}
