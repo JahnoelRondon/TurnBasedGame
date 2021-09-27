@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beast Slayers</title>
+    <title>Creature Slayers</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
     <!-- Game intro screen -->
-    <div id="gameIntro" hidden>
-        <h2>Beast Slayers</h2>
+    <div id="gameIntro" >
+        <h2>Creature Slayers</h2>
         <h3>Select your character</h3>
         <div class="characterSelection">
             <!-- viking select -->
             <img src="/imgs/viking.svg" id="vikingSelect"> 
-            <img src="/imgs/viking.svg" id="knightSelect"> 
-            <img src="/imgs/viking.svg" id="otherSelect"> 
+            <img src="/imgs/wizardImgs/wizard.svg" id="wizardSelect"> 
+            <img src="/imgs/barbarianImgs/barbarian.svg" id="barbarianSelect"> 
         </div>
     </div>
 
@@ -27,7 +27,8 @@
 
         <section class="playerSpace">
 
-            <!-- will need to make enemy cards with specific id's -->
+            <h2 id="enemyNextATK">Next Attack</h2>
+
             <div id="enemyCard">
                 <h2></h2>
                 <img>
@@ -98,7 +99,7 @@
     </div>
 
     <!-- Game End Screen -->
-    <div id="gameOutro">
+    <div id="gameOutro" hidden>
         <h2>VICTORY OR DEFEAT PLACEHOLDER</h2>
         <p>YOU SURVIVED X AMOUNT OF ROUNDS AND KILLED X AMOUNT OF BEASTS</p>
         <button>Replay</button>

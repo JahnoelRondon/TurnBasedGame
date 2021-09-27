@@ -9,26 +9,37 @@ body{
     margin: 0;
 }
 
-/*    Intro Render    */
+/* Screen renders */
+#gameIntro, #gameBoard, #gameOutro {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+
+/*    -----------------------Intro Render    */
 
 #gameIntro {
     background-color: #6d6c6d;
     color: whitesmoke;
-    max-width: 1000px;
-    height: 100vh;
-    margin: 0 auto;
+    height: 600px;
     text-align: center;
+    margin-top: 10vh;
 }
 
 #gameIntro h2, h3{
     padding-top: 10px;
+    text-shadow: 2px 2px 4px black;
 }
 
 #gameIntro h2{
-    font-size: 34px;
+    font-size: 46px;
+    color: rgb(255, 166, 0);
 }
 
+
 .characterSelection {
+    border: solid saddlebrown 4px;
+    box-shadow: 2px 2px 4px black;
     max-width: 800px;
     height: 400px;
     background-color: #836f49;
@@ -49,20 +60,18 @@ body{
 .characterSelection img:hover {
     width: 206px;
     height: 206px;
-    box-shadow: 3px 3px 8px black;
+    box-shadow: 3px 3px 8px rgb(216, 216, 216);
     cursor: pointer;
 }
 
-/* Main Render */
-
-#gameBoard {
-    max-width: 1000px;
-    margin: 0 auto;
+/* ------------------Main Render BOARD */
+#gameBoard{
+    border: 4px solid rgb(241, 194, 63);
 }
 
 #displayArea{
     width: 100%;
-    height: 460px;
+    height: 320px;
     background-color: blanchedalmond;
 }
 
@@ -70,6 +79,7 @@ body{
     height: 50%;
     display: flex;
     justify-content: center;
+    border: 1px solid black;
 }
 
 #displayArea img, .battleinfoContainer{
@@ -80,8 +90,7 @@ body{
     width: 140px;
 }
 
-
-/*          Player Cards Side                 */
+/*    -----------------Player Cards Side                 */
 .playerSpace {
     width: 100%;
     height: 250px;
@@ -99,10 +108,13 @@ body{
     border: black 2px solid;
     display: flex;
     flex-direction: column;
+    transition: all 0.1s;
 }
 
 .card:hover {
     box-shadow: 3px 3px 8px black;
+    width: 152px;
+    height: 202px;
     cursor: pointer;
 }
 
@@ -132,6 +144,11 @@ body{
     background-color: #bca984;
 }
 
+#enemyNextATK {
+    color: white;
+    text-shadow: 2px 2px 4px black;
+    font-size: 34px;
+}
 /* PASS */
 #pass {
     padding: 10px;
@@ -140,4 +157,12 @@ body{
 
 #pass:hover {
     cursor: pointer;
+}
+
+/* ----------------------------OUTRO RENDER */
+#gameOutro {
+    background-color: #bca984;
+    text-align: center;
+    margin-top: 40vh;
+    padding: 20px;
 }

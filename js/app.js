@@ -1,15 +1,14 @@
 //-------------------------------------------------------CACHED Elements
 
-// --------- Game INITIAL RENDER
+// --------- SCREEN RENDER ELEMENTS
 const introRenderEl = document.querySelector("#gameIntro");
+const gameBoardEl = document.querySelector("#gameBoard");
+const outroRenderEl = document.querySelector("#gameOutro");
 
 // Character selections
 const characterSelectionBoard = document.querySelector(".characterSelection")
 
 characterSelectionBoard.addEventListener("click", handleSelection);
-
-// -----MAIN GAME IN PROGRESS RENDER
-const gameBoardEl = document.querySelector("#gameBoard");
 
 // CARD SLOT 1
 const card1HeaderEl = document.querySelector("#card1 > h2");
@@ -59,6 +58,12 @@ const playerCoinsElement = document.querySelector("#playerCoinEl");
 const enemyHealthelement = document.querySelector("#enemyHealthEl");
 const enemyNameEl = document.querySelector("#enemyNameEl")
 
+// OUTRO RENDER
+const endingMessage = document.querySelector("#gameOutro > h2");
+const endingDescription = document.querySelector("#gameOutro > p");
+const replayBtn = document.querySelector("#gameOutro > button");
+replayBtn.addEventListener("click", newGame);
+
 //----------------------------------------------------------------CLASSES
 class Card {
     constructor(name, img, cost, dmg, healing){
@@ -101,19 +106,20 @@ class Monster {
 //-----------Player / Monsters / Cards objects & Monster attacks
 // for randomizer & rendering
 let monsterChoices = 2;
-let monsterchose, isDead;
+let monsterchose, isDead, turns, beastsKilled;
 
 // ------------Player Cards
 // ---VIKING 
-let bowWeapon = new Card("Long Shot", "/imgs/bow.svg", 1, 80);
-let clubWeapon = new Card("Skull Cracker", "/imgs/club.svg", 2, 130);
-let axeWeapon = new Card("War Axe", "/imgs/axe.svg", 3, 200);
+let bowWeapon = new Card("Long Shot", "/imgs/bow.svg", 1, 100);
+let clubWeapon = new Card("Skull Cracker", "/imgs/club.svg", 2, 200);
+let axeWeapon = new Card("War Axe", "/imgs/axe.svg", 3, 300);
 let healPotion = new Card("Potion", "/imgs/heal.svg", 4, null, 350);
 
 // ------------Monsters Attacks
 // ---SaberTooth
 let fangAttack = new Card("Fangs", "/imgs/vikingImgs/fangs.svg", null, 150);
 let clawAttack = new Card("Claws", "/imgs/vikingImgs/claws.svg", null, 100);
+// let sleepAttack = new Card("")
 
 // Players
 let viking = new Player("Viking", 500, 1, bowWeapon,clubWeapon,axeWeapon,healPotion, "/imgs/viking.svg");
@@ -154,6 +160,36 @@ const gameState = {
 
 // --------------------- FUNCTIONS
 // Event for game state on character Selection
+initialization();
+
+function initialization(){
+    // reset Gloabals
+    turns = 0;
+    beastsKilled = 0;
+    isDead = null;
+    monsterchose = null;
+    // reset state
+    gameState.playerHealth = null;
+    gameState.playerCoins = null;
+    gameState.playerName = null;
+    gameState.playerImage = null;
+    gameState.playerDamage = null;    
+    // cards
+    gameState.playerCard1 = null;
+    gameState.playerCard2 = null;
+    gameState.playerCard3 = null;
+    gameState.playerCard4 = null;
+    // ------dynamic enemy state
+    gameState.enemyHealth = null;
+    gameState.enemyName = null;
+    gameState.enemyImage = null;
+    // game state enemy damage will be determined by random attack choice
+    gameState.enemyDamage = null;
+    // attacks
+    gameState.enemyAttack1 = null;
+    gameState.enemyAttack2 = null;
+}
+
 function handleSelection(event){
     // ------------------------------------- VIKING GAMEPLAY
     if(event.target.id === "vikingSelect"){
@@ -259,10 +295,6 @@ function render(){
         EnemycardDescription.textContent = `Damage: ${gameState.enemyAttack2.dmg}`
     }
 
-    // RENDER A NEW SCREEN THAT SHOWS WIN OR LOSS, IF PLAYER IS DEAD THEN RUN IT AND IF ENEMY IS DEAD RUN IT
-    // use a function
-    checkDeaths();
-
 }
 
 function useCard(event){
@@ -328,10 +360,8 @@ function battleStage(){
     console.log(gameState.playerDamage);
 
     // player goes first
-    if(gameState.enemyHealth >= 1){
-        // GAME STILL IN PROGRESS
-        gameState.enemyHealth -= gameState.playerDamage;
-    }
+    
+    gameState.enemyHealth -= gameState.playerDamage;
 
     // Enemy goes second
     if(monsterchose === 1){
@@ -346,15 +376,47 @@ function battleStage(){
     enemyChoice(monsterChoices);
     gameState.playerCoins ++;
 
+    turns ++;
+
+    // RENDER A NEW SCREEN THAT SHOWS WIN OR LOSS
+    checkDeaths();
+
     render();
 }
 
 function checkDeaths(){
     if(gameState.enemyHealth <= 0){
         console.log("enemy died, render VICTORY Screen");
+        isDead = "enemy";
+        beastsKilled ++;
+        renderEndScreen();
     } else if(gameState.playerHealth <= 0){
-        console.log("enemy died, render DEFEAT Screen");
+        console.log("player died, render DEFEAT Screen");
+        isDead = "player";
+        renderEndScreen();
     }
+}
+
+function renderEndScreen(){
+
+    gameBoardEl.hidden = true;
+    outroRenderEl.hidden = false;
+
+    if(isDead === "enemy"){
+        endingMessage.textContent = `${gameState.playerName} IS VICTORIOUS!!!!!`
+        endingDescription.textContent = `You've survived (${turns}) turns, and killed (${beastsKilled}) beasts!`
+    } else {
+        endingMessage.textContent = `DEFEAT!!!! ${gameState.enemyName} has won.`
+        endingDescription.textContent = `You've survived (${turns}) turns, and killed (${beastsKilled}) beasts!`
+    }
+
+}
+
+function newGame(){
+    
+    initialization();
+    outroRenderEl.hidden = true;
+    introRenderEl.hidden = false;
 }
 
 // To Do
@@ -389,6 +451,8 @@ function checkDeaths(){
 
 // Add an event listener to each of the cards that checks the players coins and its cost, if the player has enough coins then use the spell by deducting the cost of the spell to player coins and use the damage of that card to subtract from the enemies health. 
 
-
-// make an initializer for the game state just in case
+// TO DO
+// make a sleep card for the monster insinuating exhuasted 
+// make an initializer for the game after they selected their character or after they hit the replay button
+    // Things to initialize, all gameState properties, isDead variable, monsterchoices and choice, turns count, beasts killed count
 // Create a victory render that lets the player restart
