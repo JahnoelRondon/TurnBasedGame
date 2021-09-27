@@ -110,10 +110,10 @@ let monsterchose, isDead, turns, beastsKilled;
 
 // ------------Player Cards
 // ---VIKING 
-let bowWeapon = new Card("Long Shot", "/imgs/bow.svg", 1, 100);
-let clubWeapon = new Card("Skull Cracker", "/imgs/club.svg", 2, 200);
-let axeWeapon = new Card("War Axe", "/imgs/axe.svg", 3, 300);
-let healPotion = new Card("Potion", "/imgs/heal.svg", 4, null, 350);
+let bowWeapon = new Card("Long Shot", "/imgs/vikingImgs/bow.svg", 1, 100);
+let clubWeapon = new Card("Skull Cracker", "/imgs/vikingImgs/club.svg", 2, 200);
+let axeWeapon = new Card("War Axe", "/imgs/vikingImgs/axe.svg", 3, 300);
+let healPotion = new Card("Potion", "/imgs/vikingImgs/heal.svg", 4, null, 350);
 
 // ------------Monsters Attacks
 // ---SaberTooth
@@ -122,10 +122,10 @@ let clawAttack = new Card("Claws", "/imgs/vikingImgs/claws.svg", null, 100);
 // let sleepAttack = new Card("")
 
 // Players
-let viking = new Player("Viking", 500, 1, bowWeapon,clubWeapon,axeWeapon,healPotion, "/imgs/viking.svg");
+let viking = new Player("Viking", 500, 1, bowWeapon,clubWeapon,axeWeapon,healPotion, "/imgs/vikingImgs/viking.svg");
 
 // Monsters 
-let saberTooth = new Monster("Saber Tooth", 800, "/imgs/saberTooth.svg", clawAttack,fangAttack)
+let saberTooth = new Monster("Saber Tooth", 800, "/imgs/vikingImgs/saberTooth.svg", clawAttack,fangAttack)
 
 // --------------------------------------------- Player State and RENDERS
 // --------GAME STATE
@@ -413,7 +413,7 @@ function renderEndScreen(){
 }
 
 function newGame(){
-    
+
     initialization();
     outroRenderEl.hidden = true;
     introRenderEl.hidden = false;
