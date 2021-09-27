@@ -82,32 +82,36 @@ class Player {
 }
 
 class Monster {
-    constructor(name,health,img){
+    constructor(name,health,img, attack1, attack2){
         this.name = name;
         this.health = health;
         this.img = img;
+        this.attack1 = attack1;
+        this.attack2 = attack2;
     }
 }
 
 //-----------------------------------------------------------------OBJECTS 
 
-//-----------Player spells objects & Monster attacks
-// ------------Players
+//-----------Player / Monsters / Cards objects & Monster attacks
+
+// ------------Player Cards
 // ---VIKING 
 let bowWeapon = new Card("Long Shot", "/imgs/bow.svg", 1, 80);
 let clubWeapon = new Card("Skull Cracker", "/imgs/club.svg", 2, 130);
 let axeWeapon = new Card("War Axe", "/imgs/axe.svg", 3, 200);
 let healPotion = new Card("Potion", "/imgs/heal.svg", 4, null, 250);
 
-// ------------Monsters
+// ------------Monsters Attacks
 // ---SaberTooth
-// let fangAttack = new card("Fangs", "/imgs/vikingImgs/fangs.svg", null, 100);
+let fangAttack = new Card("Fangs", "/imgs/vikingImgs/fangs.svg", null, 150);
+let clawAttack = new Card("Claws", "/imgs/vikingImgs/claws.svg", null, 100);
 
 // Players
 let viking = new Player("Viking", 500, 1, bowWeapon,clubWeapon,axeWeapon,healPotion, "/imgs/viking.svg");
 
 // Monsters 
-let saberTooth = new Monster("Saber Tooth", 800, "/imgs/saberTooth.svg")
+let saberTooth = new Monster("Saber Tooth", 800, "/imgs/saberTooth.svg", clawAttack,fangAttack)
 
 // --------------------------------------------- Player State and RENDERS
 // --------GAME STATE
@@ -156,6 +160,11 @@ function battleStage(){
 
 
     render();
+}
+
+function enemyChoice(){
+    // use game state 
+    
 }
 
 function useCard(event){
@@ -246,14 +255,21 @@ function gameStateViking(){
     gameState.enemyImage = saberTooth.img;
     gameState.enemyName = saberTooth.name;
 
-    // 
+    // state enemy attacks
+    gameState.enemyAttack1 = saberTooth.attack1;
+    gameState.enemyAttack2 = saberTooth.attack2;
+
+    // Create a function here than makes the enemy return a random number between 1 and 2 (or up to how ever many attacks you want them to have).
+    // this will allow render to know which card to render as well as allowing the enemy to be assigned a gameState Damage. 
+    enemyChoice()
 
     render();
 
 }
 
 function render(){
-    
+    // Player
+
     // card1 rendered
     card1HeaderEl.textContent = gameState.playerCard1.name;
     card1ImgEl.src = gameState.playerCard1.img;
@@ -274,22 +290,27 @@ function render(){
     card4ImgEl.src = gameState.playerCard4.img;
     card4Description.textContent = `Heal: ${gameState.playerCard4.healing}`;
 
-    // player avatars and stats rendered 
+    // player avatar and stats rendered 
     playerEl.src = viking.img;
 
     playerNameEl.textContent = gameState.playerName;
     playerHealthElement.textContent = `HEALTH: ${gameState.playerHealth}`;
     playerCoinsElement.textContent = `COINS: ${gameState.playerCoins}`;
 
+    // Enemy
+
+    // avatar and stats rendered
     enemyEl.src = gameState.enemyImage;
     enemyNameEl.textContent = gameState.enemyName;
     enemyHealthelement.textContent = `HEALTH: ${gameState.enemyHealth}`;
+
 
 }
 
 
 // To Do
 // Create monster attack cards, Monster chooses randomly which card to use. Before the battling stage make the monster declare which attack it will use.
+// the enemy only displays the card it will use next turn on a single card. 
 
 // Psuedo
 
