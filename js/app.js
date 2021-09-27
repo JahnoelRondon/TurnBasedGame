@@ -94,6 +94,9 @@ class Monster {
 //-----------------------------------------------------------------OBJECTS 
 
 //-----------Player / Monsters / Cards objects & Monster attacks
+// for randomizer & rendering
+let monsterChoices = 2;
+let monsterchose;
 
 // ------------Player Cards
 // ---VIKING 
@@ -146,25 +149,102 @@ const gameState = {
 
 // --------------------- FUNCTIONS
 // Event for game state on character Selection
+function handleSelection(event){
+    // ------------------------------------- VIKING GAMEPLAY
+    if(event.target.id === "vikingSelect"){
+        console.log("change game state to viking");
+        introRenderEl.hidden = true;
+        gameBoardEl.hidden = false;
 
-function battleStage(){
-    console.log(gameState.playerDamage);
-    
-    // To Do:
-    // conditions for if the enemies health is 0 or lower it cant attack the player because its dead
-    // conditional for if the players health is 0 or less they lose
-    // once there is a loser or winner render a loser or winner screen 
-    // testing
-    
-    gameState.enemyHealth -= gameState.playerDamage;
+        gameStateViking();
+    }
 
-
-    render();
 }
 
-function enemyChoice(){
+function gameStateViking(){
+
+    // player 
+    gameState.playerHealth = viking.health;
+    gameState.playerCoins = viking.coins;
+    gameState.playerName = viking.name;
+    gameState.playerImage = viking.img;
+
+    // state player cards
+    gameState.playerCard1 = viking.card1;
+    gameState.playerCard2 = viking.card2;
+    gameState.playerCard3 = viking.card3;
+    gameState.playerCard4 = viking.card4;
+
+    // enemy
+    gameState.enemyHealth = saberTooth.health;
+    gameState.enemyImage = saberTooth.img;
+    gameState.enemyName = saberTooth.name;
+
+    // state enemy attacks
+    gameState.enemyAttack1 = saberTooth.attack1;
+    gameState.enemyAttack2 = saberTooth.attack2;
+
+    // Create a function here than makes the enemy return a random number between 1 and 2 (or up to how ever many attacks you want them to have).
+    // this will allow render to know which card to render as well as allowing the enemy to be assigned a gameState Damage. 
+    enemyChoice(monsterChoices)
+
+    render();
+
+}
+
+function enemyChoice(choices){
     // use game state 
-    
+    function randomChoice(choose){
+        return Math.floor((Math.random() * choose) + 1)
+    }
+
+    return monsterchose = randomChoice(choices);
+}
+
+function render(){
+    // Player
+
+    // card1 rendered
+    card1HeaderEl.textContent = gameState.playerCard1.name;
+    card1ImgEl.src = gameState.playerCard1.img;
+    card1Description.textContent = `Damage: ${gameState.playerCard1.dmg}`;
+
+    // card2 rendered
+    card2HeaderEl.textContent = gameState.playerCard2.name;
+    card2ImgEl.src = gameState.playerCard2.img;
+    card2Description.textContent = `Damage: ${gameState.playerCard2.dmg}`;
+
+    // card3 rendered
+    card3HeaderEl.textContent = gameState.playerCard3.name;
+    card3ImgEl.src = gameState.playerCard3.img;
+    card3Description.textContent = `Damage: ${gameState.playerCard3.dmg}`;
+
+    // card4 rendered
+    card4HeaderEl.textContent = gameState.playerCard4.name;
+    card4ImgEl.src = gameState.playerCard4.img;
+    card4Description.textContent = `Heal: ${gameState.playerCard4.healing}`;
+
+    // player avatar and stats rendered 
+    playerEl.src = viking.img;
+
+    playerNameEl.textContent = gameState.playerName;
+    playerHealthElement.textContent = `HEALTH: ${gameState.playerHealth}`;
+    playerCoinsElement.textContent = `COINS: ${gameState.playerCoins}`;
+
+    // Enemy
+
+    // avatar and stats rendered
+    enemyEl.src = gameState.enemyImage;
+    enemyNameEl.textContent = gameState.enemyName;
+    enemyHealthelement.textContent = `HEALTH: ${gameState.enemyHealth}`;
+
+    // render enemy card based on enemy choices return
+    if(monsterchose === 1){
+        console.log("Monster chose attack 1");
+    } else if(monsterchose === 2){
+        console.log("Monster chose attack 2");
+    }
+
 }
 
 function useCard(event){
@@ -224,89 +304,20 @@ function useCard(event){
 
 }
 
-function handleSelection(event){
-    // ------------------------------------- VIKING GAMEPLAY
-    if(event.target.id === "vikingSelect"){
-        console.log("change game state to viking");
-        introRenderEl.hidden = true;
-        gameBoardEl.hidden = false;
+function battleStage(){
+    console.log(gameState.playerDamage);
+    
+    // To Do:
+    // conditions for if the enemies health is 0 or lower it cant attack the player because its dead
+    // conditional for if the players health is 0 or less they lose
+    // once there is a loser or winner render a loser or winner screen 
+    // testing
+    
+    gameState.enemyHealth -= gameState.playerDamage;
 
-        gameStateViking();
-    }
-
-}
-
-function gameStateViking(){
-
-    // player 
-    gameState.playerHealth = viking.health;
-    gameState.playerCoins = viking.coins;
-    gameState.playerName = viking.name;
-    gameState.playerImage = viking.img;
-
-    // state player cards
-    gameState.playerCard1 = viking.card1;
-    gameState.playerCard2 = viking.card2;
-    gameState.playerCard3 = viking.card3;
-    gameState.playerCard4 = viking.card4;
-
-    // enemy
-    gameState.enemyHealth = saberTooth.health;
-    gameState.enemyImage = saberTooth.img;
-    gameState.enemyName = saberTooth.name;
-
-    // state enemy attacks
-    gameState.enemyAttack1 = saberTooth.attack1;
-    gameState.enemyAttack2 = saberTooth.attack2;
-
-    // Create a function here than makes the enemy return a random number between 1 and 2 (or up to how ever many attacks you want them to have).
-    // this will allow render to know which card to render as well as allowing the enemy to be assigned a gameState Damage. 
-    enemyChoice()
 
     render();
-
 }
-
-function render(){
-    // Player
-
-    // card1 rendered
-    card1HeaderEl.textContent = gameState.playerCard1.name;
-    card1ImgEl.src = gameState.playerCard1.img;
-    card1Description.textContent = `Damage: ${gameState.playerCard1.dmg}`;
-
-    // card2 rendered
-    card2HeaderEl.textContent = gameState.playerCard2.name;
-    card2ImgEl.src = gameState.playerCard2.img;
-    card2Description.textContent = `Damage: ${gameState.playerCard2.dmg}`;
-
-    // card3 rendered
-    card3HeaderEl.textContent = gameState.playerCard3.name;
-    card3ImgEl.src = gameState.playerCard3.img;
-    card3Description.textContent = `Damage: ${gameState.playerCard3.dmg}`;
-
-    // card4 rendered
-    card4HeaderEl.textContent = gameState.playerCard4.name;
-    card4ImgEl.src = gameState.playerCard4.img;
-    card4Description.textContent = `Heal: ${gameState.playerCard4.healing}`;
-
-    // player avatar and stats rendered 
-    playerEl.src = viking.img;
-
-    playerNameEl.textContent = gameState.playerName;
-    playerHealthElement.textContent = `HEALTH: ${gameState.playerHealth}`;
-    playerCoinsElement.textContent = `COINS: ${gameState.playerCoins}`;
-
-    // Enemy
-
-    // avatar and stats rendered
-    enemyEl.src = gameState.enemyImage;
-    enemyNameEl.textContent = gameState.enemyName;
-    enemyHealthelement.textContent = `HEALTH: ${gameState.enemyHealth}`;
-
-
-}
-
 
 // To Do
 // Create monster attack cards, Monster chooses randomly which card to use. Before the battling stage make the monster declare which attack it will use.
