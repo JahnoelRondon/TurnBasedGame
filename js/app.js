@@ -314,8 +314,6 @@ function useCard(event){
         battleStage();
 
     }
-
-
 }
 
 function battleStage(){
@@ -326,9 +324,21 @@ function battleStage(){
     // conditional for if the players health is 0 or less they lose
     // once there is a loser or winner render a loser or winner screen 
     // testing
-    
+
+    // player goes first
     gameState.enemyHealth -= gameState.playerDamage;
 
+    // Enemy goes second
+    if(monsterchose === 1){
+        gameState.enemyDamage = gameState.enemyAttack1.dmg;
+    }else if(monsterchose === 2){
+        gameState.enemyDamage = gameState.enemyAttack2.dmg;
+    }
+
+    gameState.playerHealth -= gameState.enemyDamage;
+
+    // randomize the choice after it attacks
+    enemyChoice(monsterChoices);
 
     render();
 }
