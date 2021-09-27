@@ -101,14 +101,14 @@ class Monster {
 //-----------Player / Monsters / Cards objects & Monster attacks
 // for randomizer & rendering
 let monsterChoices = 2;
-let monsterchose;
+let monsterchose, isDead;
 
 // ------------Player Cards
 // ---VIKING 
 let bowWeapon = new Card("Long Shot", "/imgs/bow.svg", 1, 80);
 let clubWeapon = new Card("Skull Cracker", "/imgs/club.svg", 2, 130);
 let axeWeapon = new Card("War Axe", "/imgs/axe.svg", 3, 200);
-let healPotion = new Card("Potion", "/imgs/heal.svg", 4, null, 250);
+let healPotion = new Card("Potion", "/imgs/heal.svg", 4, null, 350);
 
 // ------------Monsters Attacks
 // ---SaberTooth
@@ -259,6 +259,10 @@ function render(){
         EnemycardDescription.textContent = `Damage: ${gameState.enemyAttack2.dmg}`
     }
 
+    // RENDER A NEW SCREEN THAT SHOWS WIN OR LOSS, IF PLAYER IS DEAD THEN RUN IT AND IF ENEMY IS DEAD RUN IT
+    // use a function
+    checkDeaths();
+
 }
 
 function useCard(event){
@@ -269,8 +273,9 @@ function useCard(event){
 
     if(this.id === "card1"){
         if(gameState.playerCoins >= gameState.playerCard1.cost) {
-            // create a function that takes in the parameter of dmg of the card, 
+            
             gameState.playerDamage = gameState.playerCard1.dmg;
+            gameState.playerCoins -= gameState.playerCard1.cost;
             battleStage();
 
         } else{
@@ -282,6 +287,7 @@ function useCard(event){
         if(gameState.playerCoins >= gameState.playerCard2.cost) {
 
             gameState.playerDamage = gameState.playerCard2.dmg;
+            gameState.playerCoins -= gameState.playerCard2.cost;
             battleStage();
         } else{
             alert(`You only have (${gameState.playerCoins}) coins, the card costs ${gameState.playerCard2.cost}`)
@@ -292,6 +298,7 @@ function useCard(event){
         if(gameState.playerCoins >= gameState.playerCard3.cost) {
 
             gameState.playerDamage = gameState.playerCard3.dmg;
+            gameState.playerCoins -= gameState.playerCard3.cost;
             battleStage();
         } else{
             alert(`You only have (${gameState.playerCoins}) coins, the card costs ${gameState.playerCard3.cost}`)
@@ -301,7 +308,8 @@ function useCard(event){
     if(this.id === "card4"){
         if(gameState.playerCoins >= gameState.playerCard4.cost) {
 
-            gameState.playerDamage = gameState.playerCard4.dmg;
+            gameState.playerHealth += gameState.playerCard4.healing;
+            gameState.playerCoins -= gameState.playerCard4.cost;
             battleStage();
         } else{
             alert(`You only have (${gameState.playerCoins}) coins, the card costs ${gameState.playerCard4.cost}`)
@@ -318,15 +326,12 @@ function useCard(event){
 
 function battleStage(){
     console.log(gameState.playerDamage);
-    
-    // To Do:
-    // conditions for if the enemies health is 0 or lower it cant attack the player because its dead
-    // conditional for if the players health is 0 or less they lose
-    // once there is a loser or winner render a loser or winner screen 
-    // testing
 
     // player goes first
-    gameState.enemyHealth -= gameState.playerDamage;
+    if(gameState.enemyHealth >= 1){
+        // GAME STILL IN PROGRESS
+        gameState.enemyHealth -= gameState.playerDamage;
+    }
 
     // Enemy goes second
     if(monsterchose === 1){
@@ -339,8 +344,17 @@ function battleStage(){
 
     // randomize the choice after it attacks
     enemyChoice(monsterChoices);
+    gameState.playerCoins ++;
 
     render();
+}
+
+function checkDeaths(){
+    if(gameState.enemyHealth <= 0){
+        console.log("enemy died, render VICTORY Screen");
+    } else if(gameState.playerHealth <= 0){
+        console.log("enemy died, render DEFEAT Screen");
+    }
 }
 
 // To Do
@@ -374,3 +388,7 @@ function battleStage(){
 // When the person selects a character initialization based on the one they selected should render the board and game state with player stats and monster stats
 
 // Add an event listener to each of the cards that checks the players coins and its cost, if the player has enough coins then use the spell by deducting the cost of the spell to player coins and use the damage of that card to subtract from the enemies health. 
+
+
+// make an initializer for the game state just in case
+// Create a victory render that lets the player restart
