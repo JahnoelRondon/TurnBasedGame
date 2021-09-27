@@ -31,7 +31,12 @@ const card4HeaderEl = document.querySelector("#card4 > h2");
 const card4ImgEl = document.querySelector("#card4 > img");
 const card4Description = document.querySelector("#card4 > p");
 
-// Card deck
+// ENEMY ATTACK SLOT 
+const enemyCardHeaderEl = document.querySelector("#enemyCard > h2");
+const EnemycardImgEl = document.querySelector("#enemyCard > img");
+const EnemycardDescription = document.querySelector("#enemyCard > p");
+
+// --Card deck
 const cards = document.querySelectorAll(".card");
 
 cards.forEach(function(card){
@@ -241,8 +246,17 @@ function render(){
     // render enemy card based on enemy choices return
     if(monsterchose === 1){
         console.log("Monster chose attack 1");
+
+        enemyCardHeaderEl.textContent = gameState.enemyAttack1.name
+        EnemycardImgEl.src = gameState.enemyAttack1.img;
+        EnemycardDescription.textContent = `Damage: ${gameState.enemyAttack1.dmg}`
+
     } else if(monsterchose === 2){
         console.log("Monster chose attack 2");
+
+        enemyCardHeaderEl.textContent = gameState.enemyAttack2.name
+        EnemycardImgEl.src = gameState.enemyAttack2.img;
+        EnemycardDescription.textContent = `Damage: ${gameState.enemyAttack2.dmg}`
     }
 
 }
