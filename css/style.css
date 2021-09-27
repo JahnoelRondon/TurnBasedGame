@@ -76,6 +76,10 @@ body{
     padding: 10px;
 }
 
+.battleinfoContainer {
+    width: 140px;
+}
+
 
 /*          Player Cards Side                 */
 .playerSpace {

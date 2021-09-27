@@ -47,11 +47,12 @@ const enemyEl = document.querySelector("#enemyAvatar");
 const playerEl = document.querySelector("#playerAvatar");
 
 // Text Elements / health and coins
+const playerNameEl = document.querySelector("#playerNameEl");
 const playerHealthElement = document.querySelector("#playerHealthEl");
 const playerCoinsElement = document.querySelector("#playerCoinEl");
 
 const enemyHealthelement = document.querySelector("#enemyHealthEl");
-
+const enemyNameEl = document.querySelector("#enemyNameEl")
 
 //----------------------------------------------------------------CLASSES
 class Card {
@@ -90,42 +91,53 @@ class Monster {
 
 //-----------------------------------------------------------------OBJECTS 
 
-//-----------Player spells objects
+//-----------Player spells objects & Monster attacks
+// ------------Players
 // ---VIKING 
-let bowWeapon = new Card("Long Shot", "/imgs/bow.svg", 1, 80)
-let clubWeapon = new Card("Skull Cracker", "/imgs/club.svg", 2, 130)
-let axeWeapon = new Card("War Axe", "/imgs/axe.svg", 3, 200)
-let healPotion = new Card("Potion", "/imgs/heal.svg", 4, null, 250)
+let bowWeapon = new Card("Long Shot", "/imgs/bow.svg", 1, 80);
+let clubWeapon = new Card("Skull Cracker", "/imgs/club.svg", 2, 130);
+let axeWeapon = new Card("War Axe", "/imgs/axe.svg", 3, 200);
+let healPotion = new Card("Potion", "/imgs/heal.svg", 4, null, 250);
+
+// ------------Monsters
+// ---SaberTooth
+// let fangAttack = new card("Fangs", "/imgs/vikingImgs/fangs.svg", null, 100);
 
 // Players
 let viking = new Player("Viking", 500, 1, bowWeapon,clubWeapon,axeWeapon,healPotion, "/imgs/viking.svg");
 
 // Monsters 
-let saberTooth = new Monster("SaberTooth", 800, "/imgs/saberTooth.svg")
+let saberTooth = new Monster("Saber Tooth", 800, "/imgs/saberTooth.svg")
 
 // --------------------------------------------- Player State and RENDERS
 // --------GAME STATE
 
 const gameState = {
-    // dynamic player state
+    // ----dynamic player state
     playerHealth: null,
     playerCoins: null,
-    // game state player damage will be determined by card selected?
-    playerDamage: null,
-
     playerName: null,
     playerImage: null,
+    // game state player damage will be determined by card selected
+    playerDamage: null,    
+
+    // cards
     playerCard1: null,
     playerCard2: null,
     playerCard3: null,
     playerCard4: null,
 
-    // dynamic enemy state
+    // ------dynamic enemy state
     enemyHealth: null,
-    enemyDamage: null,
-
     enemyName: null,
     enemyImage: null,
+    // game state enemy damage will be determined by random attack choice
+    enemyDamage: null,
+
+    // attacks
+    enemyAttack1: null,
+    enemyAttack2: null,
+
 }
 
 // --------------------- FUNCTIONS
@@ -134,6 +146,16 @@ const gameState = {
 function battleStage(){
     console.log(gameState.playerDamage);
     
+    // To Do:
+    // conditions for if the enemies health is 0 or lower it cant attack the player because its dead
+    // conditional for if the players health is 0 or less they lose
+    // once there is a loser or winner render a loser or winner screen 
+    // testing
+    
+    gameState.enemyHealth -= gameState.playerDamage;
+
+
+    render();
 }
 
 function useCard(event){
@@ -210,12 +232,10 @@ function gameStateViking(){
     // player 
     gameState.playerHealth = viking.health;
     gameState.playerCoins = viking.coins;
-    // game state player damage will be determined by card selected?
-    // gameState.playerDamage =
-
     gameState.playerName = viking.name;
     gameState.playerImage = viking.img;
 
+    // state player cards
     gameState.playerCard1 = viking.card1;
     gameState.playerCard2 = viking.card2;
     gameState.playerCard3 = viking.card3;
@@ -224,45 +244,52 @@ function gameStateViking(){
     // enemy
     gameState.enemyHealth = saberTooth.health;
     gameState.enemyImage = saberTooth.img;
+    gameState.enemyName = saberTooth.name;
 
-    // change the name to render game since it can be used for all characters????
-    renderViking();
+    // 
+
+    render();
 
 }
 
-function renderViking(){
+function render(){
     
-    // Bow rendered
+    // card1 rendered
     card1HeaderEl.textContent = gameState.playerCard1.name;
     card1ImgEl.src = gameState.playerCard1.img;
     card1Description.textContent = `Damage: ${gameState.playerCard1.dmg}`;
 
-    // Club card rendered
+    // card2 rendered
     card2HeaderEl.textContent = gameState.playerCard2.name;
     card2ImgEl.src = gameState.playerCard2.img;
     card2Description.textContent = `Damage: ${gameState.playerCard2.dmg}`;
 
-    // Axe card rendered
+    // card3 rendered
     card3HeaderEl.textContent = gameState.playerCard3.name;
     card3ImgEl.src = gameState.playerCard3.img;
     card3Description.textContent = `Damage: ${gameState.playerCard3.dmg}`;
 
-    // Heal card rendered
+    // card4 rendered
     card4HeaderEl.textContent = gameState.playerCard4.name;
     card4ImgEl.src = gameState.playerCard4.img;
     card4Description.textContent = `Heal: ${gameState.playerCard4.healing}`;
 
-    // player avatars rendered 
+    // player avatars and stats rendered 
     playerEl.src = viking.img;
 
+    playerNameEl.textContent = gameState.playerName;
     playerHealthElement.textContent = `HEALTH: ${gameState.playerHealth}`;
     playerCoinsElement.textContent = `COINS: ${gameState.playerCoins}`;
 
-
     enemyEl.src = gameState.enemyImage;
+    enemyNameEl.textContent = gameState.enemyName;
     enemyHealthelement.textContent = `HEALTH: ${gameState.enemyHealth}`;
 
 }
+
+
+// To Do
+// Create monster attack cards, Monster chooses randomly which card to use. Before the battling stage make the monster declare which attack it will use.
 
 // Psuedo
 
