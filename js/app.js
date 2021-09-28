@@ -98,7 +98,7 @@ class Monster {
         this.img = img;
         this.attack1 = attack1;
         this.attack2 = attack2;
-        this.sleep - sleep;
+        this.sleep = sleep;
     }
 }
 
@@ -144,7 +144,7 @@ let wizard = new Player("Wizard", 400, 2, orbCard, iceCard, golemCard, fairyCard
 let barbarian = new Player("Barbarian", 750, 2, enrageCard, clubCard, thorPunchCard, bandageCard, "/imgs/barbarianImgs/barbarian.svg",)
 
 // Monsters 
-let saberTooth = new Monster("Saber Tooth", 800, "/imgs/vikingImgs/saberTooth.svg", clawAttack,fangAttack, sleepCard)
+let saberTooth = new Monster("Saber Tooth", 800, "/imgs/vikingImgs/saberTooth.svg", clawAttack,fangAttack, sleepCard);
 
 // --------------------------------------------- Player State and RENDERS
 // --------GAME STATE
@@ -262,7 +262,7 @@ function gameStateViking(){
     // state enemy attacks
     gameState.enemyAttack1 = saberTooth.attack1;
     gameState.enemyAttack2 = saberTooth.attack2;
-    
+    gameState.enemySleep = saberTooth.sleep;
 
     // this will allow render to know which card to render as well as allowing the enemy to be assigned a gameState Damage. 
     enemyChoice(monsterChoices)
@@ -293,6 +293,7 @@ function gameStateWizard(){
     // state enemy attacks
     gameState.enemyAttack1 = saberTooth.attack1;
     gameState.enemyAttack2 = saberTooth.attack2;
+    gameState.enemySleep = saberTooth.sleep;
 
     // this will allow render to know which card to render as well as allowing the enemy to be assigned a gameState Damage. 
     enemyChoice(monsterChoices)
@@ -323,6 +324,7 @@ function gameStateBarbarian(){
     // state enemy attacks
     gameState.enemyAttack1 = saberTooth.attack1;
     gameState.enemyAttack2 = saberTooth.attack2;
+    gameState.enemySleep = saberTooth.sleep;
 
     // this will allow render to know which card to render as well as allowing the enemy to be assigned a gameState Damage. 
     enemyChoice(monsterChoices)
@@ -391,7 +393,15 @@ function render(){
         enemyCardHeaderEl.textContent = gameState.enemyAttack2.name
         EnemycardImgEl.src = gameState.enemyAttack2.img;
         EnemycardDescription.textContent = `Attack: ${gameState.enemyAttack2.dmg}`
+    } else if(monsterchose === 3){
+        console.log("Creature chose Sleep");
+
+        enemyCardHeaderEl.textContent = gameState.enemySleep.name
+        EnemycardImgEl.src = gameState.enemySleep.img;
+        EnemycardDescription.textContent = `Attack: ${gameState.enemySleep.dmg}`
     }
+
+
 
 }
 
@@ -466,6 +476,8 @@ function battleStage(){
         gameState.enemyDamage = gameState.enemyAttack1.dmg;
     }else if(monsterchose === 2){
         gameState.enemyDamage = gameState.enemyAttack2.dmg;
+    }else if(monsterchose === 3){
+        gameState.enemyDamage = gameState.enemySleep.dmg;
     }
 
     gameState.playerHealth -= gameState.enemyDamage;
