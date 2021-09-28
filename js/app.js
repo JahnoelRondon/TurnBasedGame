@@ -297,14 +297,14 @@ function gameStateWizard(){
     gameState.playerCard4 = wizard.card4;
 
     // enemy
-    gameState.enemyHealth = saberTooth.health;
-    gameState.enemyImage = saberTooth.img;
-    gameState.enemyName = saberTooth.name;
+    gameState.enemyHealth = dragon.health;
+    gameState.enemyImage = dragon.img;
+    gameState.enemyName = dragon.name;
 
     // state enemy attacks
-    gameState.enemyAttack1 = saberTooth.attack1;
-    gameState.enemyAttack2 = saberTooth.attack2;
-    gameState.enemySleep = saberTooth.sleep;
+    gameState.enemyAttack1 = dragon.attack1;
+    gameState.enemyAttack2 = dragon.attack2;
+    gameState.enemySleep = dragon.sleep;
 
     // this will allow render to know which card to render as well as allowing the enemy to be assigned a gameState Damage. 
     enemyChoice(monsterChoices)
