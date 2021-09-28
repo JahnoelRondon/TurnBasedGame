@@ -137,7 +137,7 @@ let clawAttack = new Card("Claws", "/imgs/vikingImgs/claws.svg", null, 100, null
 
 // ---- Golem cards
 let rockSlideAttack = new Card("Rock Slide", "/imgs/barbarianImgs/rockSlide.svg", null, 400, null);
-let rockHeart = new Card("Tough Love", "/imgs/barbarianImgs/mineral-heart.svg", null, null, 300);
+let rockHeart = new Card("Tough Love", "/imgs/barbarianImgs/mineralHeart.svg", null, null, 300);
 
 // Players
 let viking = new Player("Viking", 1200, 1, bowCard,flailCard,axeCard,armorCard, "/imgs/vikingImgs/viking.svg");
@@ -148,6 +148,7 @@ let barbarian = new Player("Barbarian", 750, 2, enrageCard, clubCard, thorPunchC
 
 // Monsters 
 let saberTooth = new Monster("Saber Tooth", 800, "/imgs/vikingImgs/saberTooth.svg", clawAttack, fangAttack, sleepCard);
+
 let golem = new Monster("Golem", 2000, "/imgs/barbarianImgs/golem.svg", rockSlideAttack, rockHeart, sleepCard);
 
 // --------------------------------------------- Player State and RENDERS
@@ -321,14 +322,18 @@ function gameStateBarbarian(){
     gameState.playerCard4 = barbarian.card4;
 
     // enemy
-    gameState.enemyHealth = saberTooth.health;
-    gameState.enemyImage = saberTooth.img;
-    gameState.enemyName = saberTooth.name;
+    gameState.enemyHealth = golem.health;
+    gameState.enemyImage = golem.img;
+    gameState.enemyName = golem.name;
 
     // state enemy attacks
-    gameState.enemyAttack1 = saberTooth.attack1;
-    gameState.enemyAttack2 = saberTooth.attack2;
-    gameState.enemySleep = saberTooth.sleep;
+    gameState.enemyAttack1 = golem.attack1;
+    gameState.enemyAttack2 = golem.attack2;
+    gameState.enemySleep = golem.sleep;
+
+    // gameState.enemyAttack1 = saberTooth.attack1;
+    // gameState.enemyAttack2 = saberTooth.attack2;
+    // gameState.enemySleep = saberTooth.sleep;
 
     // this will allow render to know which card to render as well as allowing the enemy to be assigned a gameState Damage. 
     enemyChoice(monsterChoices)
@@ -384,28 +389,40 @@ function render(){
     enemyHealthelement.textContent = `HEALTH: ${gameState.enemyHealth}`;
 
     // render enemy card based on enemy choices return
-    if(monsterchose === 1){
+    if(monsterchose === 1 && gameState.enemyAttack1.healing === null){
         console.log("Monster chose attack 1");
 
         enemyCardHeaderEl.textContent = gameState.enemyAttack1.name
         EnemycardImgEl.src = gameState.enemyAttack1.img;
         EnemycardDescription.textContent = `Attack: ${gameState.enemyAttack1.dmg}`
 
-    } else if(monsterchose === 2){
+    } else if(monsterchose === 1 && gameState.enemyAttack1.healing != null){
+        enemyCardHeaderEl.textContent = gameState.enemyAttack1.name
+        EnemycardImgEl.src = gameState.enemyAttack1.img;
+        EnemycardDescription.textContent = `Health: +${gameState.enemyAttack1.healing}`
+    }
+    
+    if(monsterchose === 2 && gameState.enemyAttack2.healing === null){
         console.log("Monster chose attack 2");
 
         enemyCardHeaderEl.textContent = gameState.enemyAttack2.name
         EnemycardImgEl.src = gameState.enemyAttack2.img;
         EnemycardDescription.textContent = `Attack: ${gameState.enemyAttack2.dmg}`
-    } else if(monsterchose === 3){
+    } else if(monsterchose === 2 && gameState.enemyAttack2.healing != null) {
+
+        enemyCardHeaderEl.textContent = gameState.enemyAttack2.name
+        EnemycardImgEl.src = gameState.enemyAttack2.img;
+        EnemycardDescription.textContent = `Attack: ${gameState.enemyAttack2.healing}`
+    }
+    
+    // Sleep will always be option 3
+    if(monsterchose === 3){
         console.log("Creature chose Sleep");
 
         enemyCardHeaderEl.textContent = gameState.enemySleep.name
         EnemycardImgEl.src = gameState.enemySleep.img;
         EnemycardDescription.textContent = `Attack: ${gameState.enemySleep.dmg}`
     }
-
-
 
 }
 
@@ -469,25 +486,34 @@ function useCard(event){
 }
 
 function battleStage(){
-    console.log(gameState.playerDamage);
-
     // player goes first
     
     gameState.enemyHealth -= gameState.playerDamage;
 
     // Enemy goes second
     // seperating ifs so that i can use conditionals for unique cards/ card traits
-    if(monsterchose === 1){
+    
+
+
+    if(monsterchose === 1 && gameState.enemyAttack1.healing === null){
+        console.log("card 1 did damage");
+
         gameState.enemyDamage = gameState.enemyAttack1.dmg;
+    }  else if(monsterchose === 1 && gameState.enemyAttack1.healing != null){
+
+        gameState.enemyHealth += gameState.enemyAttack1.healing;
     }
     
     if(monsterchose === 2 && gameState.enemyAttack2.healing === null){
         console.log("card 2 did damage");
+
         gameState.enemyDamage = gameState.enemyAttack2.dmg;
-    } else if(gameState.enemyAttack2.healing != null){
+    } else if(monsterchose === 2 && gameState.enemyAttack2.healing != null){
+        console.log("card 2 Heal");
         gameState.enemyHealth += gameState.enemyAttack2.healing;
     }
     
+    // third option will always be sleep
     if(monsterchose === 3){
         gameState.enemyDamage = gameState.enemySleep.dmg;
     }
