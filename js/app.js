@@ -131,10 +131,13 @@ let bandageCard = new Card("Bandage", "/imgs/barbarianImgs/bandage.svg", 2, null
 // ------------Monsters Cards
 let sleepCard = new Card("Sleep", "/imgs/sleep.svg", null, 0)
 
-// ---SaberTooth
+// ---SaberTooth cards
 let fangAttack = new Card("Fangs", "/imgs/vikingImgs/fangs.svg", null, 150);
 let clawAttack = new Card("Claws", "/imgs/vikingImgs/claws.svg", null, 100);
 
+// ---- Golem cards
+let rockSlideAttack = new Card("Rock Slide", "/imgs/barbarianImgs/rockSlide.svg", null, 400);
+let rockHeart = new Card("Tough Love", "/imgs/barbarianImgs/mineral-heart.svg", null, null, 300);
 
 // Players
 let viking = new Player("Viking", 1200, 1, bowCard,flailCard,axeCard,armorCard, "/imgs/vikingImgs/viking.svg");
@@ -144,7 +147,8 @@ let wizard = new Player("Wizard", 400, 2, orbCard, iceCard, golemCard, fairyCard
 let barbarian = new Player("Barbarian", 750, 2, enrageCard, clubCard, thorPunchCard, bandageCard, "/imgs/barbarianImgs/barbarian.svg",)
 
 // Monsters 
-let saberTooth = new Monster("Saber Tooth", 800, "/imgs/vikingImgs/saberTooth.svg", clawAttack,fangAttack, sleepCard);
+let saberTooth = new Monster("Saber Tooth", 800, "/imgs/vikingImgs/saberTooth.svg", clawAttack, fangAttack, sleepCard);
+let golem = new Monster("Golem", 2000, "/imgs/barbarianImgs/golem.svg", rockSlideAttack, rockHeart, sleepCard);
 
 // --------------------------------------------- Player State and RENDERS
 // --------GAME STATE

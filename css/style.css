@@ -150,12 +150,15 @@ body{
 }
 /* PASS */
 #pass {
-    padding: 10px;
+    padding: 16px;
     font-size: 16px;
+    background-color: #beb39d;
+    font-weight: bold;
 }
 
 #pass:hover {
     cursor: pointer;
+    background-color: #e7dcc5;
 }
 
 /* ----------------------------OUTRO RENDER */
