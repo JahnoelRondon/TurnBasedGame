@@ -92,12 +92,13 @@ class Player {
 }
 
 class Monster {
-    constructor(name,health,img, attack1, attack2){
+    constructor(name,health,img, attack1, attack2, sleep){
         this.name = name;
         this.health = health;
         this.img = img;
         this.attack1 = attack1;
         this.attack2 = attack2;
+        this.sleep - sleep;
     }
 }
 
@@ -105,7 +106,7 @@ class Monster {
 
 //-----------Player / Monsters / Cards objects & Monster attacks
 // for randomizer & rendering
-let monsterChoices = 2;
+let monsterChoices = 3;
 let monsterchose, isDead, turns, beastsKilled;
 
 // ------------Player Cards
@@ -127,11 +128,13 @@ let clubCard = new Card("Jay's Club", "/imgs/barbarianImgs/club.svg", 3, 550);
 let thorPunchCard = new Card("Thor Punch", "/imgs/barbarianImgs/thor-fist.svg", 5, 700)
 let bandageCard = new Card("Bandage", "/imgs/barbarianImgs/bandage.svg", 2, null, 200)
 
-// ------------Monsters Attacks
+// ------------Monsters Cards
+let sleepCard = new Card("Sleep", "/imgs/sleep.svg", null, 0)
+
 // ---SaberTooth
 let fangAttack = new Card("Fangs", "/imgs/vikingImgs/fangs.svg", null, 150);
 let clawAttack = new Card("Claws", "/imgs/vikingImgs/claws.svg", null, 100);
-// let sleepAttack = new Card("")
+
 
 // Players
 let viking = new Player("Viking", 1200, 1, bowCard,flailCard,axeCard,armorCard, "/imgs/vikingImgs/viking.svg");
@@ -141,7 +144,7 @@ let wizard = new Player("Wizard", 400, 2, orbCard, iceCard, golemCard, fairyCard
 let barbarian = new Player("Barbarian", 750, 2, enrageCard, clubCard, thorPunchCard, bandageCard, "/imgs/barbarianImgs/barbarian.svg",)
 
 // Monsters 
-let saberTooth = new Monster("Saber Tooth", 800, "/imgs/vikingImgs/saberTooth.svg", clawAttack,fangAttack)
+let saberTooth = new Monster("Saber Tooth", 800, "/imgs/vikingImgs/saberTooth.svg", clawAttack,fangAttack, sleepCard)
 
 // --------------------------------------------- Player State and RENDERS
 // --------GAME STATE
@@ -171,6 +174,7 @@ const gameState = {
     // attacks
     enemyAttack1: null,
     enemyAttack2: null,
+    enemySleep: null,
 
 }
 
@@ -204,6 +208,7 @@ function initialization(){
     // attacks
     gameState.enemyAttack1 = null;
     gameState.enemyAttack2 = null;
+    gameState.enemySleep = null;
 }
 
 function handleSelection(event){
@@ -257,6 +262,7 @@ function gameStateViking(){
     // state enemy attacks
     gameState.enemyAttack1 = saberTooth.attack1;
     gameState.enemyAttack2 = saberTooth.attack2;
+    
 
     // this will allow render to know which card to render as well as allowing the enemy to be assigned a gameState Damage. 
     enemyChoice(monsterChoices)
