@@ -132,11 +132,11 @@ let bandageCard = new Card("Bandage", "/imgs/barbarianImgs/bandage.svg", 2, null
 let sleepCard = new Card("Sleep", "/imgs/sleep.svg", null, 0)
 
 // ---SaberTooth cards
-let fangAttack = new Card("Fangs", "/imgs/vikingImgs/fangs.svg", null, 150);
-let clawAttack = new Card("Claws", "/imgs/vikingImgs/claws.svg", null, 100);
+let fangAttack = new Card("Fangs", "/imgs/vikingImgs/fangs.svg", null, 150, null);
+let clawAttack = new Card("Claws", "/imgs/vikingImgs/claws.svg", null, 100, null);
 
 // ---- Golem cards
-let rockSlideAttack = new Card("Rock Slide", "/imgs/barbarianImgs/rockSlide.svg", null, 400);
+let rockSlideAttack = new Card("Rock Slide", "/imgs/barbarianImgs/rockSlide.svg", null, 400, null);
 let rockHeart = new Card("Tough Love", "/imgs/barbarianImgs/mineral-heart.svg", null, null, 300);
 
 // Players
@@ -476,11 +476,19 @@ function battleStage(){
     gameState.enemyHealth -= gameState.playerDamage;
 
     // Enemy goes second
+    // seperating ifs so that i can use conditionals for unique cards/ card traits
     if(monsterchose === 1){
         gameState.enemyDamage = gameState.enemyAttack1.dmg;
-    }else if(monsterchose === 2){
+    }
+    
+    if(monsterchose === 2 && gameState.enemyAttack2.healing === null){
+        console.log("card 2 did damage");
         gameState.enemyDamage = gameState.enemyAttack2.dmg;
-    }else if(monsterchose === 3){
+    } else if(gameState.enemyAttack2.healing != null){
+        gameState.enemyHealth += gameState.enemyAttack2.healing;
+    }
+    
+    if(monsterchose === 3){
         gameState.enemyDamage = gameState.enemySleep.dmg;
     }
 
