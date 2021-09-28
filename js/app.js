@@ -110,10 +110,22 @@ let monsterchose, isDead, turns, beastsKilled;
 
 // ------------Player Cards
 // ---VIKING 
-let bowWeapon = new Card("Long Shot", "/imgs/vikingImgs/bow.svg", 1, 100);
-let clubWeapon = new Card("Skull Cracker", "/imgs/vikingImgs/club.svg", 2, 200);
-let axeWeapon = new Card("War Axe", "/imgs/vikingImgs/axe.svg", 3, 300);
-let healPotion = new Card("Potion", "/imgs/vikingImgs/heal.svg", 4, null, 350);
+let bowCard = new Card("Long Shot", "/imgs/vikingImgs/bow.svg", 1, 100);
+let flailCard = new Card("Flail", "/imgs/vikingImgs/flail.svg", 2, 200);
+let axeCard = new Card("War Axe", "/imgs/vikingImgs/axe.svg", 3, 300);
+let armorCard = new Card("Armor", "/imgs/vikingImgs/armour.svg", 4, null, 350);
+
+//---WIZARD
+let orbCard = new Card("Unstable Orb", "/imgs/wizardImgs/orb.svg", 1, 150);
+let iceCard = new Card("Ice Bolt", "/imgs/wizardImgs/iceBolt.svg", 2, 300);
+let golemCard = new Card("Ice Golem", "/imgs/wizardImgs/ice-golem.svg", 4, 550);
+let fairyCard = new Card("Fairy", "/imgs/wizardImgs/fairy.svg", 3, null, 500);
+
+// --BARBARIAN
+let enrageCard = new Card("Race Out", "/imgs/barbarianImgs/enrage.svg", 2, 350);
+let clubCard = new Card("Jay's Club", "/imgs/barbarianImgs/club.svg", 3, 550);
+let thorPunchCard = new Card("Thor Punch", "/imgs/barbarianImgs/thor-fist.svg", 5, 700)
+let bandageCard = new Card("Bandage", "/imgs/barbarianImgs/bandage.svg", 2, null, 200)
 
 // ------------Monsters Attacks
 // ---SaberTooth
@@ -122,7 +134,11 @@ let clawAttack = new Card("Claws", "/imgs/vikingImgs/claws.svg", null, 100);
 // let sleepAttack = new Card("")
 
 // Players
-let viking = new Player("Viking", 500, 1, bowWeapon,clubWeapon,axeWeapon,healPotion, "/imgs/vikingImgs/viking.svg");
+let viking = new Player("Viking", 1200, 1, bowCard,flailCard,axeCard,armorCard, "/imgs/vikingImgs/viking.svg");
+
+let wizard = new Player("Wizard", 400, 2, orbCard, iceCard, golemCard, fairyCard, "/imgs/wizardImgs/wizard.svg")
+
+let barbarian = new Player("Barbarian", 750, 2, enrageCard, clubCard, thorPunchCard, bandageCard, "/imgs/barbarianImgs/barbarian.svg",)
 
 // Monsters 
 let saberTooth = new Monster("Saber Tooth", 800, "/imgs/vikingImgs/saberTooth.svg", clawAttack,fangAttack)
@@ -200,8 +216,25 @@ function handleSelection(event){
         gameStateViking();
     }
 
+    if(event.target.id === "wizardSelect"){
+        console.log("change game state to wizard");
+        introRenderEl.hidden = true;
+        gameBoardEl.hidden = false;
+
+        gameStateWizard();
+    }
+
+    if(event.target.id === "barbarianSelect"){
+        console.log("change game state to barbarian");
+        introRenderEl.hidden = true;
+        gameBoardEl.hidden = false;
+
+        gameStateBarbarian();
+    }
+
 }
 
+// player renders
 function gameStateViking(){
 
     // player 
@@ -225,7 +258,66 @@ function gameStateViking(){
     gameState.enemyAttack1 = saberTooth.attack1;
     gameState.enemyAttack2 = saberTooth.attack2;
 
-    // Create a function here than makes the enemy return a random number between 1 and 2 (or up to how ever many attacks you want them to have).
+    // this will allow render to know which card to render as well as allowing the enemy to be assigned a gameState Damage. 
+    enemyChoice(monsterChoices)
+
+    render();
+
+}
+
+function gameStateWizard(){
+
+    // player 
+    gameState.playerHealth = wizard.health;
+    gameState.playerCoins = wizard.coins;
+    gameState.playerName = wizard.name;
+    gameState.playerImage = wizard.img;
+
+    // state player cards
+    gameState.playerCard1 = wizard.card1;
+    gameState.playerCard2 = wizard.card2;
+    gameState.playerCard3 = wizard.card3;
+    gameState.playerCard4 = wizard.card4;
+
+    // enemy
+    gameState.enemyHealth = saberTooth.health;
+    gameState.enemyImage = saberTooth.img;
+    gameState.enemyName = saberTooth.name;
+
+    // state enemy attacks
+    gameState.enemyAttack1 = saberTooth.attack1;
+    gameState.enemyAttack2 = saberTooth.attack2;
+
+    // this will allow render to know which card to render as well as allowing the enemy to be assigned a gameState Damage. 
+    enemyChoice(monsterChoices)
+
+    render();
+
+}
+
+function gameStateBarbarian(){
+
+    // player 
+    gameState.playerHealth = barbarian.health;
+    gameState.playerCoins = barbarian.coins;
+    gameState.playerName = barbarian.name;
+    gameState.playerImage = barbarian.img;
+
+    // state player cards
+    gameState.playerCard1 = barbarian.card1;
+    gameState.playerCard2 = barbarian.card2;
+    gameState.playerCard3 = barbarian.card3;
+    gameState.playerCard4 = barbarian.card4;
+
+    // enemy
+    gameState.enemyHealth = saberTooth.health;
+    gameState.enemyImage = saberTooth.img;
+    gameState.enemyName = saberTooth.name;
+
+    // state enemy attacks
+    gameState.enemyAttack1 = saberTooth.attack1;
+    gameState.enemyAttack2 = saberTooth.attack2;
+
     // this will allow render to know which card to render as well as allowing the enemy to be assigned a gameState Damage. 
     enemyChoice(monsterChoices)
 
@@ -248,17 +340,17 @@ function render(){
     // card1 rendered
     card1HeaderEl.textContent = gameState.playerCard1.name;
     card1ImgEl.src = gameState.playerCard1.img;
-    card1Description.textContent = `Damage: ${gameState.playerCard1.dmg}`;
+    card1Description.textContent = `Attack: ${gameState.playerCard1.dmg}`;
 
     // card2 rendered
     card2HeaderEl.textContent = gameState.playerCard2.name;
     card2ImgEl.src = gameState.playerCard2.img;
-    card2Description.textContent = `Damage: ${gameState.playerCard2.dmg}`;
+    card2Description.textContent = `Attack: ${gameState.playerCard2.dmg}`;
 
     // card3 rendered
     card3HeaderEl.textContent = gameState.playerCard3.name;
     card3ImgEl.src = gameState.playerCard3.img;
-    card3Description.textContent = `Damage: ${gameState.playerCard3.dmg}`;
+    card3Description.textContent = `Attack: ${gameState.playerCard3.dmg}`;
 
     // card4 rendered
     card4HeaderEl.textContent = gameState.playerCard4.name;
@@ -266,7 +358,7 @@ function render(){
     card4Description.textContent = `Heal: ${gameState.playerCard4.healing}`;
 
     // player avatar and stats rendered 
-    playerEl.src = viking.img;
+    playerEl.src = gameState.playerImage;
 
     playerNameEl.textContent = gameState.playerName;
     playerHealthElement.textContent = `HEALTH: ${gameState.playerHealth}`;
@@ -285,14 +377,14 @@ function render(){
 
         enemyCardHeaderEl.textContent = gameState.enemyAttack1.name
         EnemycardImgEl.src = gameState.enemyAttack1.img;
-        EnemycardDescription.textContent = `Damage: ${gameState.enemyAttack1.dmg}`
+        EnemycardDescription.textContent = `Attack: ${gameState.enemyAttack1.dmg}`
 
     } else if(monsterchose === 2){
         console.log("Monster chose attack 2");
 
         enemyCardHeaderEl.textContent = gameState.enemyAttack2.name
         EnemycardImgEl.src = gameState.enemyAttack2.img;
-        EnemycardDescription.textContent = `Damage: ${gameState.enemyAttack2.dmg}`
+        EnemycardDescription.textContent = `Attack: ${gameState.enemyAttack2.dmg}`
     }
 
 }
@@ -420,8 +512,8 @@ function newGame(){
 }
 
 // To Do
-// Create monster attack cards, Monster chooses randomly which card to use. Before the battling stage make the monster declare which attack it will use.
-// the enemy only displays the card it will use next turn on a single card. 
+// Create Monster sleeping card and change options to 3 
+// make a seperate folder for monsters
 
 // Psuedo
 
