@@ -119,14 +119,14 @@ let armorCard = new Card("Armor", "/imgs/vikingImgs/armour.svg", 4, null, 350);
 //---WIZARD
 let orbCard = new Card("Unstable Orb", "/imgs/wizardImgs/orb.svg", 1, 150);
 let iceCard = new Card("Ice Bolt", "/imgs/wizardImgs/iceBolt.svg", 2, 300);
-let golemCard = new Card("Ice Golem", "/imgs/wizardImgs/ice-golem.svg", 4, 550);
+let golemCard = new Card("Ice Golem", "/imgs/wizardImgs/ice-golem.svg", 4, 700);
 let fairyCard = new Card("Fairy", "/imgs/wizardImgs/fairy.svg", 3, null, 500);
 
 // --BARBARIAN
 let enrageCard = new Card("Race Out", "/imgs/barbarianImgs/enrage.svg", 2, 350);
 let clubCard = new Card("Jay's Club", "/imgs/barbarianImgs/club.svg", 3, 550);
-let thorPunchCard = new Card("Thor Punch", "/imgs/barbarianImgs/thor-fist.svg", 5, 700)
-let bandageCard = new Card("Bandage", "/imgs/barbarianImgs/bandage.svg", 2, null, 200)
+let thorPunchCard = new Card("Thor Punch", "/imgs/barbarianImgs/thor-fist.svg", 5, 750)
+let bandageCard = new Card("Bandage", "/imgs/barbarianImgs/bandage.svg", 2, null, 250)
 
 // ------------Monsters Cards
 let sleepCard = new Card("Sleep", "/imgs/sleep.svg", null, 0)
@@ -136,8 +136,12 @@ let fangAttack = new Card("Fangs", "/imgs/vikingImgs/fangs.svg", null, 150, null
 let clawAttack = new Card("Claws", "/imgs/vikingImgs/claws.svg", null, 100, null);
 
 // ---- Golem cards
-let rockSlideAttack = new Card("Rock Slide", "/imgs/barbarianImgs/rockSlide.svg", null, 400, null);
-let rockHeart = new Card("Tough Love", "/imgs/barbarianImgs/mineralHeart.svg", null, null, 300);
+let rockSlideAttack = new Card("Rock Slide", "/imgs/barbarianImgs/rockSlide.svg", null, 300, null);
+let rockHeart = new Card("Tough Love", "/imgs/barbarianImgs/mineralHeart.svg", null, null, 150);
+
+// ---- Dragon cards
+let breathAttack = new Card("Dragon Breath", "/imgs/wizardImgs/dragon-breath.svg", null, 50, null);
+let volcanoAttack = new Card("Erupt", "/imgs/wizardImgs/caldera.svg", null, 300, null);
 
 // Players
 let viking = new Player("Viking", 1200, 1, bowCard,flailCard,axeCard,armorCard, "/imgs/vikingImgs/viking.svg");
@@ -149,7 +153,9 @@ let barbarian = new Player("Barbarian", 750, 2, enrageCard, clubCard, thorPunchC
 // Monsters 
 let saberTooth = new Monster("Saber Tooth", 800, "/imgs/vikingImgs/saberTooth.svg", clawAttack, fangAttack, sleepCard);
 
-let golem = new Monster("Golem", 2000, "/imgs/barbarianImgs/golem.svg", rockSlideAttack, rockHeart, sleepCard);
+let golem = new Monster("Golem", 1400, "/imgs/barbarianImgs/golem.svg", rockSlideAttack, rockHeart, sleepCard);
+
+let dragon = new Monster("Dragon", 900, "/imgs/wizardImgs/dragon.svg", breathAttack, volcanoAttack, sleepCard);
 
 // --------------------------------------------- Player State and RENDERS
 // --------GAME STATE
@@ -331,10 +337,6 @@ function gameStateBarbarian(){
     gameState.enemyAttack2 = golem.attack2;
     gameState.enemySleep = golem.sleep;
 
-    // gameState.enemyAttack1 = saberTooth.attack1;
-    // gameState.enemyAttack2 = saberTooth.attack2;
-    // gameState.enemySleep = saberTooth.sleep;
-
     // this will allow render to know which card to render as well as allowing the enemy to be assigned a gameState Damage. 
     enemyChoice(monsterChoices)
 
@@ -372,7 +374,7 @@ function render(){
     // card4 rendered
     card4HeaderEl.textContent = gameState.playerCard4.name;
     card4ImgEl.src = gameState.playerCard4.img;
-    card4Description.textContent = `Heal: ${gameState.playerCard4.healing}`;
+    card4Description.textContent = `Heal: +${gameState.playerCard4.healing}`;
 
     // player avatar and stats rendered 
     playerEl.src = gameState.playerImage;
@@ -399,7 +401,7 @@ function render(){
     } else if(monsterchose === 1 && gameState.enemyAttack1.healing != null){
         enemyCardHeaderEl.textContent = gameState.enemyAttack1.name
         EnemycardImgEl.src = gameState.enemyAttack1.img;
-        EnemycardDescription.textContent = `Health: +${gameState.enemyAttack1.healing}`
+        EnemycardDescription.textContent = `Heal: +${gameState.enemyAttack1.healing}`
     }
     
     if(monsterchose === 2 && gameState.enemyAttack2.healing === null){
@@ -409,10 +411,11 @@ function render(){
         EnemycardImgEl.src = gameState.enemyAttack2.img;
         EnemycardDescription.textContent = `Attack: ${gameState.enemyAttack2.dmg}`
     } else if(monsterchose === 2 && gameState.enemyAttack2.healing != null) {
+        console.log("Monster chose Heal 2");
 
         enemyCardHeaderEl.textContent = gameState.enemyAttack2.name
         EnemycardImgEl.src = gameState.enemyAttack2.img;
-        EnemycardDescription.textContent = `Attack: ${gameState.enemyAttack2.healing}`
+        EnemycardDescription.textContent = `Heal: +${gameState.enemyAttack2.healing}`
     }
     
     // Sleep will always be option 3
@@ -493,8 +496,8 @@ function battleStage(){
     // Enemy goes second
     // seperating ifs so that i can use conditionals for unique cards/ card traits
     
-
-
+    // checks for healing
+    // messy conditionals 
     if(monsterchose === 1 && gameState.enemyAttack1.healing === null){
         console.log("card 1 did damage");
 
@@ -519,6 +522,10 @@ function battleStage(){
     }
 
     gameState.playerHealth -= gameState.enemyDamage;
+
+    // reset enemy damage after attacking since the value stays after healing
+    gameState.enemyDamage = 0;
+
 
     // randomize the choice after it attacks
     enemyChoice(monsterChoices);
