@@ -7,7 +7,6 @@ const outroRenderEl = document.querySelector("#gameOutro");
 
 // Character selections
 const characterSelectionBoard = document.querySelector(".characterSelection")
-
 characterSelectionBoard.addEventListener("click", handleSelection);
 
 // CARD SLOT 1
@@ -250,7 +249,7 @@ function handleSelection(event){
 
 }
 
-// player renders
+// player renders & States
 function gameStateViking(){
 
     // player 
@@ -610,4 +609,4 @@ function newGame(){
 // make a sleep card for the monster insinuating exhuasted 
 // make an initializer for the game after they selected their character or after they hit the replay button
     // Things to initialize, all gameState properties, isDead variable, monsterchoices and choice, turns count, beasts killed count
-// Create a victory render that lets the player restart
+// Create a victory or defeat render that lets the player restart
