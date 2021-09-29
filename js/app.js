@@ -1,3 +1,8 @@
+// ------------------------------------ CONST VARIABLES
+// ---Audio
+const bgMusicEl = document.querySelector("#bgMusic");
+const sfxEl = document.querySelector("#sfxAudio");
+
 //-------------------------------------------------------CACHED Elements
 
 // --------- SCREEN RENDER ELEMENTS
@@ -6,8 +11,7 @@ const gameBoardEl = document.querySelector("#gameBoard");
 const outroRenderEl = document.querySelector("#gameOutro");
 
 // Character selections
-const characterSelectionBoard = document.querySelector(".characterSelection")
-characterSelectionBoard.addEventListener("click", handleSelection);
+const characterSelectionBoard = document.querySelector(".characterSelection");
 
 // CARD SLOT 1
 const card1HeaderEl = document.querySelector("#card1 > h2");
@@ -37,13 +41,9 @@ const EnemycardDescription = document.querySelector("#enemyCard > p");
 // --Card deck
 const cards = document.querySelectorAll(".card");
 
-cards.forEach(function(card){
-    card.addEventListener("click", useCard)
-})
 
 // PASS BTN
 const passEl = document.querySelector("#pass");
-passEl.addEventListener("click", useCard);
 
 // Avatar IMGS
 const enemyEl = document.querySelector("#enemyAvatar");
@@ -61,7 +61,6 @@ const enemyNameEl = document.querySelector("#enemyNameEl")
 const endingMessage = document.querySelector("#gameOutro > h2");
 const endingDescription = document.querySelector("#gameOutro > p");
 const replayBtn = document.querySelector("#gameOutro > button");
-replayBtn.addEventListener("click", newGame);
 
 //----------------------------------------------------------------CLASSES
 class Card {
@@ -110,10 +109,10 @@ let monsterchose, isDead, turns, beastsKilled;
 
 // ------------Player Cards
 // ---VIKING 
-let bowCard = new Card("Long Shot", "/imgs/vikingImgs/bow.svg", 1, 100);
+let bowCard = new Card("Long Shot", "/imgs/vikingImgs/bow.svg", 1, 50);
 let flailCard = new Card("Flail", "/imgs/vikingImgs/flail.svg", 2, 200);
-let axeCard = new Card("War Axe", "/imgs/vikingImgs/axe.svg", 3, 300);
-let armorCard = new Card("Armor", "/imgs/vikingImgs/armour.svg", 4, null, 350);
+let axeCard = new Card("War Axe", "/imgs/vikingImgs/axe.svg", 3, 400);
+let armorCard = new Card("Armor", "/imgs/vikingImgs/armour.svg", 4, null, 550);
 
 //---WIZARD
 let orbCard = new Card("Unstable Orb", "/imgs/wizardImgs/orb.svg", 1, 150);
@@ -131,7 +130,7 @@ let bandageCard = new Card("Bandage", "/imgs/barbarianImgs/bandage.svg", 2, null
 let sleepCard = new Card("Sleep", "/imgs/sleep.svg", null, 0)
 
 // ---SaberTooth cards
-let fangAttack = new Card("Fangs", "/imgs/vikingImgs/fangs.svg", null, 150, null);
+let fangAttack = new Card("Fangs", "/imgs/vikingImgs/fangs.svg", null, 300, null);
 let clawAttack = new Card("Claws", "/imgs/vikingImgs/claws.svg", null, 100, null);
 
 // ---- Golem cards
@@ -143,14 +142,14 @@ let breathAttack = new Card("Dragon Breath", "/imgs/wizardImgs/dragon-breath.svg
 let volcanoAttack = new Card("Erupt", "/imgs/wizardImgs/caldera.svg", null, 300, null);
 
 // Players
-let viking = new Player("Viking", 1200, 1, bowCard,flailCard,axeCard,armorCard, "/imgs/vikingImgs/viking.svg");
+let viking = new Player("Viking", 1500, 1, bowCard,flailCard,axeCard,armorCard, "/imgs/vikingImgs/viking.svg");
 
 let wizard = new Player("Wizard", 400, 2, orbCard, iceCard, golemCard, fairyCard, "/imgs/wizardImgs/wizard.svg")
 
 let barbarian = new Player("Barbarian", 750, 2, enrageCard, clubCard, thorPunchCard, bandageCard, "/imgs/barbarianImgs/barbarian.svg",)
 
 // Monsters 
-let saberTooth = new Monster("Saber Tooth", 800, "/imgs/vikingImgs/saberTooth.svg", clawAttack, fangAttack, sleepCard);
+let saberTooth = new Monster("Saber Tooth", 1000, "/imgs/vikingImgs/saberTooth.svg", clawAttack, fangAttack, sleepCard);
 
 let golem = new Monster("Golem", 1400, "/imgs/barbarianImgs/golem.svg", rockSlideAttack, rockHeart, sleepCard);
 
@@ -188,8 +187,20 @@ const gameState = {
 
 }
 
+// -------------------EVENTS
+characterSelectionBoard.addEventListener("click", handleAudio);
+
+characterSelectionBoard.addEventListener("click", handleSelection);
+
+cards.forEach(function(card){
+    card.addEventListener("click", useCard)
+});
+
+passEl.addEventListener("click", useCard);
+replayBtn.addEventListener("click", newGame);
+
+
 // --------------------- FUNCTIONS
-// Event for game state on character Selection
 initialization();
 
 function initialization(){
@@ -429,19 +440,18 @@ function render(){
 }
 
 function useCard(event){
-    // make pass count as useCard as well and iterate and complete the turn
-    
-    // if id = card1 
-        // check card1 cost and compare to player coins, if they have enough coins then use the dmg from card 1 and reduce it to the enemies health as well as reduce the players coins (and add 1 coin), else alert that they do not have enough coins.
 
+    // checks if the card can be purchased
     if(this.id === "card1"){
         if(gameState.playerCoins >= gameState.playerCard1.cost) {
             
             gameState.playerDamage = gameState.playerCard1.dmg;
             gameState.playerCoins -= gameState.playerCard1.cost;
+            cardSFX(true);
             battleStage();
 
         } else{
+            cardSFX(false);
             alert(`You only have (${gameState.playerCoins}) coins, the card costs ${gameState.playerCard1.cost}`)
         }        
     }
@@ -451,8 +461,10 @@ function useCard(event){
 
             gameState.playerDamage = gameState.playerCard2.dmg;
             gameState.playerCoins -= gameState.playerCard2.cost;
+            cardSFX(true);
             battleStage();
         } else{
+            cardSFX(false);
             alert(`You only have (${gameState.playerCoins}) coins, the card costs ${gameState.playerCard2.cost}`)
         }        
     }
@@ -462,8 +474,10 @@ function useCard(event){
 
             gameState.playerDamage = gameState.playerCard3.dmg;
             gameState.playerCoins -= gameState.playerCard3.cost;
+            cardSFX(true);
             battleStage();
         } else{
+            cardSFX(false);
             alert(`You only have (${gameState.playerCoins}) coins, the card costs ${gameState.playerCard3.cost}`)
         }        
     }
@@ -473,8 +487,10 @@ function useCard(event){
 
             gameState.playerHealth += gameState.playerCard4.healing;
             gameState.playerCoins -= gameState.playerCard4.cost;
+            cardSFX(true);
             battleStage();
         } else{
+            cardSFX(false);
             alert(`You only have (${gameState.playerCoins}) coins, the card costs ${gameState.playerCard4.cost}`)
         }        
     } 
@@ -571,6 +587,40 @@ function newGame(){
     initialization();
     outroRenderEl.hidden = true;
     introRenderEl.hidden = false;
+    bgMusicEl.pause();
+}
+
+function handleAudio(event){
+
+    // Background Audio
+    if(event.target.id ==="vikingSelect"){
+        bgMusicEl.setAttribute("src", "/Audio/Baba Yaga.mp3")
+        bgMusicEl.volume = 0.3;
+        bgMusicEl.play();
+    }
+
+    if(event.target.id ==="wizardSelect"){
+        bgMusicEl.setAttribute("src", "/Audio/Crunk Knight.mp3")
+        bgMusicEl.volume = 0.2;
+        bgMusicEl.play();
+    }
+
+    if(event.target.id ==="barbarianSelect"){
+        bgMusicEl.setAttribute("src", "/Audio/Five Armies.mp3")
+        bgMusicEl.volume = 0.4;
+        bgMusicEl.play();
+    }
+
+}
+
+function cardSFX(condition){
+    if(condition){
+        sfxEl.setAttribute("src", "/Audio/sfx/purchase.mp3")
+        sfxEl.play();
+    } else {
+        sfxEl.setAttribute("src", "/Audio/sfx/brokecoin.mp3")
+        sfxEl.play();
+    }
 }
 
 // To Do
