@@ -138,7 +138,7 @@ let rockSlideAttack = new Card("Rock Slide", "/imgs/barbarianImgs/rockSlide.svg"
 let rockHeart = new Card("Tough Love", "/imgs/barbarianImgs/mineralHeart.svg", null, null, 150);
 
 // ---- Dragon cards
-let breathAttack = new Card("Dragon Breath", "/imgs/wizardImgs/dragon-breath.svg", null, 50, null);
+let breathAttack = new Card("Breath", "/imgs/wizardImgs/dragon-breath.svg", null, 50, null);
 let volcanoAttack = new Card("Erupt", "/imgs/wizardImgs/caldera.svg", null, 300, null);
 
 // Players
