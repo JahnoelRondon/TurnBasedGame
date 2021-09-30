@@ -242,6 +242,7 @@ function handleSelection(event){
         gameStateViking();
     }
 
+    // ------------------------------------- WIZARD GAMEPLAY
     if(event.target.id === "wizardSelect"){
         console.log("change game state to wizard");
         introRenderEl.hidden = true;
@@ -250,6 +251,7 @@ function handleSelection(event){
         gameStateWizard();
     }
 
+    // ------------------------------------- BARBARIAN GAMEPLAY
     if(event.target.id === "barbarianSelect"){
         console.log("change game state to barbarian");
         introRenderEl.hidden = true;
@@ -355,7 +357,6 @@ function gameStateBarbarian(){
 }
 
 function enemyChoice(choices){
-    // use game state 
     function randomChoice(choose){
         return Math.floor((Math.random() * choose) + 1)
     }
@@ -365,7 +366,6 @@ function enemyChoice(choices){
 
 function render(){
     // Player
-
     // card1 rendered
     card1HeaderEl.textContent = gameState.playerCard1.name;
     card1ImgEl.src = gameState.playerCard1.img;
@@ -386,6 +386,8 @@ function render(){
     card4ImgEl.src = gameState.playerCard4.img;
     card4Description.textContent = `Heal: +${gameState.playerCard4.healing}`;
 
+    // renderCardStyles();
+
     // player avatar and stats rendered 
     playerEl.src = gameState.playerImage;
 
@@ -394,13 +396,13 @@ function render(){
     playerCoinsElement.textContent = `COINS: ${gameState.playerCoins}`;
 
     // Enemy
-
     // avatar and stats rendered
     enemyEl.src = gameState.enemyImage;
     enemyNameEl.textContent = gameState.enemyName;
     enemyHealthelement.textContent = `HEALTH: ${gameState.enemyHealth}`;
 
     // render enemy card based on enemy choices return
+    // checks for healing cards
     if(monsterchose === 1 && gameState.enemyAttack1.healing === null){
         console.log("Monster chose attack 1");
 
@@ -482,6 +484,7 @@ function useCard(event){
         }        
     }
     
+    // 4th card is always heal, 
     if(this.id === "card4"){
         if(gameState.playerCoins >= gameState.playerCard4.cost) {
 
@@ -504,15 +507,11 @@ function useCard(event){
 }
 
 function battleStage(){
-    // player goes first
-    
+    // player goes 1st
     gameState.enemyHealth -= gameState.playerDamage;
-
-    // Enemy goes second
-    // seperating ifs so that i can use conditionals for unique cards/ card traits
     
+    // enemy goes 2nd
     // checks for healing
-    // messy conditionals 
     if(monsterchose === 1 && gameState.enemyAttack1.healing === null){
         console.log("card 1 did damage");
 
@@ -538,9 +537,9 @@ function battleStage(){
 
     gameState.playerHealth -= gameState.enemyDamage;
 
+    // Resets
     // reset enemy damage after attacking since the value stays after healing
     gameState.enemyDamage = 0;
-
 
     // randomize the choice after it attacks
     enemyChoice(monsterChoices);
@@ -548,7 +547,6 @@ function battleStage(){
 
     turns ++;
 
-    // RENDER A NEW SCREEN THAT SHOWS WIN OR LOSS
     checkDeaths();
 
     render();
@@ -623,22 +621,19 @@ function cardSFX(condition){
     }
 }
 
-// To Do
-// Create Monster sleeping card and change options to 3 
-// make a seperate folder for monsters
+// function renderCardStyles(){
+
+// }
 
 // Psuedo
 
 // 0 cache all of the card elements to be rendered
 
-// 1. Create a class object to be used for every spell card i decide to make
-    // 1.1 after creating a spell card 
+// 1. Create a class object to be used for every spell card i decide to make.
 
 // 2) CARDS functions
     // Do not allow the player to click on cards they cannot afford,
-    // if the player does not have enough coins for the card disable
-    // 
-
+    // if the player does not have enough coins for the card alert
 
 // 3. Create a class for different kind of players and enemies
     // make the enemy render the card it chooses randomly
@@ -647,9 +642,9 @@ function cardSFX(condition){
     // 4 Game state
 // When after selecting a character render the character that was clicked and render an enemy
 
-// as well as rendering them, set a battle stage for the respective player and beast. (find out how to get the current player and current enemy??)
+// as well as rendering them, set a battle stage for the respective player and beast. 
 
-// Create a game state object that takes in the player and enemys health, spells, and players coins,?
+// Create a game state object that takes in the player and enemys health, spells, and players coins.
 
 // When the person selects a character initialization based on the one they selected should render the board and game state with player stats and monster stats
 
