@@ -386,7 +386,7 @@ function render(){
     card4ImgEl.src = gameState.playerCard4.img;
     card4Description.textContent = `Heal: +${gameState.playerCard4.healing}`;
 
-    // renderCardStyles();
+    renderCardStyles();
 
     // player avatar and stats rendered 
     playerEl.src = gameState.playerImage;
@@ -404,7 +404,6 @@ function render(){
     // render enemy card based on enemy choices return
     // checks for healing cards
     if(monsterchose === 1 && gameState.enemyAttack1.healing === null){
-        console.log("Monster chose attack 1");
 
         enemyCardHeaderEl.textContent = gameState.enemyAttack1.name
         EnemycardImgEl.src = gameState.enemyAttack1.img;
@@ -417,13 +416,11 @@ function render(){
     }
     
     if(monsterchose === 2 && gameState.enemyAttack2.healing === null){
-        console.log("Monster chose attack 2");
 
         enemyCardHeaderEl.textContent = gameState.enemyAttack2.name
         EnemycardImgEl.src = gameState.enemyAttack2.img;
         EnemycardDescription.textContent = `Attack: ${gameState.enemyAttack2.dmg}`
     } else if(monsterchose === 2 && gameState.enemyAttack2.healing != null) {
-        console.log("Monster chose Heal 2");
 
         enemyCardHeaderEl.textContent = gameState.enemyAttack2.name
         EnemycardImgEl.src = gameState.enemyAttack2.img;
@@ -432,13 +429,12 @@ function render(){
     
     // Sleep will always be option 3
     if(monsterchose === 3){
-        console.log("Creature chose Sleep");
 
         enemyCardHeaderEl.textContent = gameState.enemySleep.name
         EnemycardImgEl.src = gameState.enemySleep.img;
         EnemycardDescription.textContent = `Attack: ${gameState.enemySleep.dmg}`
     }
-
+    
 }
 
 function useCard(event){
@@ -513,7 +509,6 @@ function battleStage(){
     // enemy goes 2nd
     // checks for healing
     if(monsterchose === 1 && gameState.enemyAttack1.healing === null){
-        console.log("card 1 did damage");
 
         gameState.enemyDamage = gameState.enemyAttack1.dmg;
     }  else if(monsterchose === 1 && gameState.enemyAttack1.healing != null){
@@ -522,11 +517,9 @@ function battleStage(){
     }
     
     if(monsterchose === 2 && gameState.enemyAttack2.healing === null){
-        console.log("card 2 did damage");
 
         gameState.enemyDamage = gameState.enemyAttack2.dmg;
     } else if(monsterchose === 2 && gameState.enemyAttack2.healing != null){
-        console.log("card 2 Heal");
         gameState.enemyHealth += gameState.enemyAttack2.healing;
     }
     
@@ -554,12 +547,10 @@ function battleStage(){
 
 function checkDeaths(){
     if(gameState.enemyHealth <= 0){
-        console.log("enemy died, render VICTORY Screen");
         isDead = "enemy";
         beastsKilled ++;
         renderEndScreen();
     } else if(gameState.playerHealth <= 0){
-        console.log("player died, render DEFEAT Screen");
         isDead = "player";
         renderEndScreen();
     }
@@ -621,9 +612,65 @@ function cardSFX(condition){
     }
 }
 
-// function renderCardStyles(){
+function renderCardStyles(){
 
-// }
+    if(gameState.playerName === "Viking"){
+
+        card1HeaderEl.style.backgroundColor = "#6D9886";
+        card2HeaderEl.style.backgroundColor = "#6D9886";
+        card3HeaderEl.style.backgroundColor = "#6D9886";
+        card4HeaderEl.style.backgroundColor = "#6D9886";
+
+        card1Description.style.backgroundColor = "#6D9886";
+        card2Description.style.backgroundColor = "#6D9886";
+        card3Description.style.backgroundColor = "#6D9886";
+        card4Description.style.backgroundColor = "#6D9886";
+
+        // img els
+        card1ImgEl.style.backgroundColor = "#212121";
+        card2ImgEl.style.backgroundColor = "#212121";
+        card3ImgEl.style.backgroundColor = "#212121";
+        card4ImgEl.style.backgroundColor = "#212121";
+    }
+    
+    if(gameState.playerName === "Wizard"){
+
+        card1HeaderEl.style.backgroundColor = "#916BBF";
+        card2HeaderEl.style.backgroundColor = "#916BBF";
+        card3HeaderEl.style.backgroundColor = "#916BBF";
+        card4HeaderEl.style.backgroundColor = "#916BBF";
+
+        card1Description.style.backgroundColor = "#916BBF";
+        card2Description.style.backgroundColor = "#916BBF";
+        card3Description.style.backgroundColor = "#916BBF";
+        card4Description.style.backgroundColor = "#916BBF";
+
+        // img els
+        card1ImgEl.style.backgroundColor = "#1C0C5B";
+        card2ImgEl.style.backgroundColor = "#1C0C5B";
+        card3ImgEl.style.backgroundColor = "#1C0C5B";
+        card4ImgEl.style.backgroundColor = "#1C0C5B";
+    }
+
+    if(gameState.playerName === "Barbarian"){
+
+        card1HeaderEl.style.backgroundColor = "#C36839";
+        card2HeaderEl.style.backgroundColor = "#C36839";
+        card3HeaderEl.style.backgroundColor = "#C36839";
+        card4HeaderEl.style.backgroundColor = "#C36839";
+
+        card1Description.style.backgroundColor = "#C36839";
+        card2Description.style.backgroundColor = "#C36839";
+        card3Description.style.backgroundColor = "#C36839";
+        card4Description.style.backgroundColor = "#C36839";
+
+        // img els
+        card1ImgEl.style.backgroundColor = "#630A10";
+        card2ImgEl.style.backgroundColor = "#630A10";
+        card3ImgEl.style.backgroundColor = "#630A10";
+        card4ImgEl.style.backgroundColor = "#630A10";
+    }
+}
 
 // Psuedo
 
