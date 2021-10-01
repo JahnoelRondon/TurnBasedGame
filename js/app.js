@@ -89,7 +89,7 @@ class Player {
 }
 
 class Monster {
-    constructor(name,health,img, attack1, attack2, sleep){
+    constructor(name,health, img, attack1, attack2, sleep){
         this.name = name;
         this.health = health;
         this.img = img;
