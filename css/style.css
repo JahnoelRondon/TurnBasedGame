@@ -37,7 +37,7 @@ body{
 
 
 .characterSelection {
-    border: inset saddlebrown 6px;
+    border: inset saddlebrown 12px;
     box-shadow: 8px 8px 16px black;
     max-width: 800px;
     height: 400px;
@@ -90,14 +90,6 @@ body{
     color: white;
 }
 
-/* .playerSides p {
-    color: rgb(253, 60, 60);
-}
-
-#playerCoinEl {
-    color: gold;
-} */
-
 .playerSides h1 {
     text-shadow: gray 2px 2px 3px;
 }
@@ -120,7 +112,6 @@ body{
     align-items: center;
 }
 
-
 /* CARD */
 .card, #enemyCard {
     width: 150px;
@@ -132,7 +123,7 @@ body{
 }
 
 .card:hover {
-    box-shadow: 3px 3px 8px rgb(250, 225, 2);
+    box-shadow: 3px 3px 8px black;
     width: 152px;
     height: 202px;
     cursor: pointer;
@@ -150,7 +141,6 @@ body{
     width: 100%;
     height: 100px;
     background-color: #99845b;
-    /* background-image: url("/imgs/bow.svg"); */
     background-size:contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -186,14 +176,41 @@ body{
     color: black;
     cursor: pointer;
     background-color: gold;
+    box-shadow: 1px 1px 12px gold;
 }
 
 /* ----------------------------OUTRO RENDER */
 #gameOutro {
-    background-color: #bca984;
+    max-width: 700px;
+    background-color: #1f1f1f;
+    border: inset 12px #865439;
+    box-shadow: inset 2px 2px 12px #865439;
     text-align: center;
+    color: white;
     margin-top: 40vh;
     padding: 20px;
 }
 
-/*  CUSTOM PLAYER STYLINGS */
+#gameOutro h2 {
+    font-size: 42px;
+}
+
+#gameOutro button {
+    margin-top: 10px;
+    padding: 16px;
+    font-size: 16px;
+    background-color: #865439;
+    color: white;
+    font-weight: bold;
+    border: 4px solid #bca984;
+    border-radius: 10px;
+    transition: all 0.5s;
+}
+
+#gameOutro button:hover {
+    box-shadow: 1px 1px 12px whitesmoke;
+    background-color: #bca984;
+    color: black;
+    cursor: pointer;
+
+}

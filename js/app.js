@@ -41,7 +41,6 @@ const EnemycardDescription = document.querySelector("#enemyCard > p");
 // --Card deck
 const cards = document.querySelectorAll(".card");
 
-
 // PASS BTN
 const passEl = document.querySelector("#pass");
 
@@ -673,6 +672,12 @@ function renderCardStyles(){
 }
 
 // Psuedo
+
+// --------------------------------GAMEPLAY 
+// Selecting cards or passing ends the turn and starts the next one. The players actions always execute first before the creature meaning you get the first move. When your health reaches 0 you lose. When the enemies health reaches 0 you win.  
+// The Slayers have coins that they can use to purchase cards to use for slaying and doing damage to creatures. After every turn the slayer gets +1 coin. Every Slayer is unique in some way.
+
+// ------ PSUEDO CODE 
 
 // 0 cache all of the card elements to be rendered
 
